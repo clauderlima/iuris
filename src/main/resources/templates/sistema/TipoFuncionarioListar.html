@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout-padrao">
+
+<section layout:fragment="conteudo">
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row justify-content-md-center">
+				<div class="col-md-6">
+	       			<div class="card table-with-links">
+	           			<div class="card-header ">
+	           				<div class="row ">
+								<div class="col-md-8">
+				  					<h4 class="card-title">Tipo de Funcionário</h4>
+	               					<p class="card-category">Tipos disponíveis para o sistema</p>
+								</div>
+								<div class="col-md-4">
+	       							<div class="text-right">
+	        							<a th:href="@{/gerencia/funcionario/tipo/novo}" class="btn btn-fill btn-warning"><i class="fas fa-plus"></i> &nbsp; Novo Tipo</a>
+	       							</div>
+								</div>
+							</div>
+	           			</div>
+	       				<div class="card-body table-full-width">
+	           				<table class="table">
+	               				<thead>
+	                   				<tr>
+				                       <th class="text-center">#</th>
+				                       <th>Nome</th>
+				                       <th class="text-center">Ações</th>
+				                   </tr>
+	               				</thead>
+				               	<tbody>
+				                   	<tr th:each="tipo, iterationStatus : ${tipos}">
+				                       	<td th:text="${iterationStatus.count}"class="text-center">1</td>
+				                       	<td th:text="${tipo.nome}">Andrew Mike</td>
+				                       	<td class="td-actions text-center">
+				                           	<a th:href="@{/gerencia/funcionario/tipo/{id}(id = ${tipo.id})}" rel="tooltip" title="" class="btn btn-success btn-link btn-xs" data-original-title="Editar">
+				                               	<i class="fa fa-edit"></i>
+				                           	</a>
+				                           	<!-- <a th:href="@{/gerencia/funcionario/tipo/remove/{id}(id = ${tipo.id})}" rel="tooltip" title="" class="btn btn-danger btn-link btn-xs" data-original-title="Remover">
+				                            	<i class="fa fa-times"></i>
+				                           	</a> -->
+				                       </td>
+				                   </tr>
+				               </tbody>
+	           				</table>
+	       				</div>
+					</div>
+	      		</div>
+			</div>
+    	</div>
+    </div>
+</section>
+<section layout:fragment="javascript-extra">
+
+	<script th:inline="javascript">
+	
+	    var message = [[${mensagem}]];
+	    if (message != null ) {
+	    	
+	    $.notify({
+	    	icon: "nc-icon nc-circle-09",
+	        message: message
+	
+	    }, {
+	        timer: 1000,
+	        placement: {
+	            from: 'top',
+	            align: 'center'
+	        }
+	    });
+	    }
+	</script>
+
+</section>
+
+</html>

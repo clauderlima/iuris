@@ -1,0 +1,6 @@
+	<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+		<th:block th:each="detailedError : ${#fields.detailedErrors()}">
+			<div><i class="fa fa-angle-double-right" aria-hidden="true"></i> [[${detailedError.message}]]</div>
+		</th:block>
+	</div>

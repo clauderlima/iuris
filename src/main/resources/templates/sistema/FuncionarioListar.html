@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<section layout:fragment="conteudo">
+	<div id="content" class="content">
+		<!-- begin breadcrumb -->
+		<ol class="breadcrumb float-xl-right">
+			<li class="breadcrumb-item"><a href="javascript:;">Cadastro</a></li>
+			<li class="breadcrumb-item"><a href="javascript:;">Funcionários</a></li>
+			<li class="breadcrumb-item active">Listar</li>
+		</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">Funcionários <small>cadastro no sistema</small></h1>
+			<!-- end page-header -->
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<!-- begin panel-heading -->
+				<div class="panel-heading">
+					<h4 class="panel-title">Relação de Funcionários</h4>
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+					</div>
+				</div>
+				<!-- end panel-heading -->
+				<!-- begin panel-body -->
+				<div class="panel-body">
+					<table id="tabela" class="table table-striped table-bordered table-td-valign-middle">
+			      		<thead>
+			        		<tr role="row">
+			        			<th>#</th>
+			               		<th>Nome</th>
+			                   	<th>CPF</th>
+			                   	<th>Telefone</th>
+			                   	<th>E-mail</th>
+			                   	<th>Cargo</th>
+			                   	<th class="text-center" data-orderable="false">Ações</th>
+			        		</tr>
+		            	</thead>
+         				<tbody>
+                       		<tr th:each="funcionario, num : ${funcionarios}">
+                          		<td th:text="${num.count}">Airi Satou</td>
+                          		<td th:text="${funcionario.nome}">Airi Satou</td>
+                           		<td th:text="${funcionario.cpf}">Accountant</td>
+                           		<td th:text="${funcionario.telefoneCelular.numero}">Accountant</td>
+                           		<td th:text="${funcionario.email}">2008/11/28</td>
+                           		<td th:text="${funcionario.cargoFuncionario} ? ${funcionario.cargoFuncionario.descricao} :  '-'">-</td>
+                           		<td class="text-right">
+                               		<a th:href="@{/gerencia/funcionario/{id}(id = ${funcionario.id})}" class="btn btn-link btn-warning edit"  rel="tooltip" data-original-title="Editar Dados"><i class="fa fa-edit"></i></a>
+                               		<!-- <a href="#" class="btn btn-link btn-danger remove"><i class="fa fa-times"></i></a> -->
+                           		</td>
+                      		</tr>
+    					</tbody>
+         			</table>
+				</div>
+				<!-- end panel-body -->
+			</div>
+			<!-- end panel -->
+		</div>
+		<!-- end #content -->
+	</section>
+<section layout:fragment="javascript-extra">
+	<script th:src="@{/assets/plugins/datatables.net/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
+	<script th:src="@{/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	<script th:src="@{/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js}"></script>
+	<script th:src="@{/assets/js/demo/table-manage-default.demo.js}"></script>
+	
+	<script type="text/javascript">
+   
+		$('#tabela').DataTable( {
+			buttons: [
+					'pdf',
+					'print'
+			],
+			responsive: true,
+		    language: {
+		        search:         "Pesquisar&nbsp;:",
+		        lengthMenu:    	"Mostrar _MENU_",
+		        info:           "Mostrando do _START_ ao _END_ de um total de _TOTAL_ clientes",
+		        emptyTable: 	"Essa tabela não possui dados",
+		        paginate: {
+		            first:      "Primeiro",
+		            previous:   "Anterior",
+		            next:       "Próximo",
+		            last:       "Último"
+		        },
+		    }
+		} );
+	</script>
+
+</section>
+
+</html>

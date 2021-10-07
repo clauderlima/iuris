@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+	</head>
+	<body>
+
+	<div id="top-menu" class="top-menu" th:fragment="menu">
+			<!-- begin nav -->
+			<ul class="nav">
+				<li class="has-sub">
+					<a href="javascript:;">
+						<i class="fa fa-th-large"></i>
+						<span>Dashboard</span>
+						<b class="caret"></b>
+					</a>
+					<ul class="sub-menu">
+						<li><a th:href="@{/}">Dashboard</a></li>
+					</ul>
+				</li>
+
+				
+				<li class="has-sub">
+					<a href="javascript:;">
+						<i class="fa fa-user"></i>
+						<span>Cadastro</span>
+						<b class="caret"></b>
+					</a>
+					<ul class="sub-menu">
+						<li class="has-sub">
+							<a href="javascript:;">
+								Clientes
+								<b class="caret"></b>
+							</a>
+							<ul class="sub-menu">
+								<li><a th:href="@{/cliente}">Listar</a></li>
+								<li><a th:href="@{/cliente/novo}">Adicionar</a></li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a href="javascript:;">
+								Funcionários
+								<b class="caret"></b>
+							</a>
+							<ul class="sub-menu">
+								<li><a th:href="@{/gerencia/funcionario}">Listar</a></li>
+								<li><a th:href="@{/gerencia/funcionario/novo}">Adicionar</a></li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a href="javascript:;">
+								Usuários
+								<b class="caret"></b>
+							</a>
+							<ul class="sub-menu">
+								<li><a th:href="@{/gerencia/usuario}">Listar</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				
+				<li class="has-sub">
+					<a href="javascript:;">
+						<i class="fa fa-user"></i>
+						<span>Procuração</span>
+						<b class="caret"></b>
+					</a>
+					<ul class="sub-menu">
+						<li><a th:href="@{/gerencia/poder}">Poderes</a></li>
+						<li><a th:href="@{/procuracao}">Procurações</a></li>
+					</ul>
+				</li>
+						
+				
+				<li class="has-sub">
+					<a href="javascript:;">
+						<i class="fa fa-cogs"></i>
+						<span>Administração</span>
+						<b class="caret"></b>
+					</a>
+					<ul class="sub-menu">
+						<li class="has-sub">
+							<a href="javascript:;">
+								Escritórios
+								<b class="caret"></b>
+							</a>
+							<ul class="sub-menu">
+								<li><a th:href="@{/gerencia/escritorio}">Listar</a></li>
+								<li><a th:href="@{/gerencia/escritorio/novo}">Adicionar</a></li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a href="javascript:;">
+								Tipos Funcionários
+								<b class="caret"></b>
+							</a>
+							<ul class="sub-menu">
+								<li><a th:href="@{/gerencia/funcionario}">Listar</a></li>
+								<li><a th:href="@{/gerencia/funcionario/novo}">Adicionar</a></li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a href="javascript:;">
+								Grupos
+								<b class="caret"></b>
+							</a>
+							<ul class="sub-menu">
+								<li><a th:href="@{/gerencia/grupo}">Listar</a></li>
+								<li><a th:href="@{/gerencia/grupo/novo}">Adicionar</a></li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a th:href="@{/gerencia/permissao}">
+								Permissões
+							</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class="menu-control menu-control-left">
+					<a href="javascript:;" data-click="prev-menu"><i class="fa fa-angle-left"></i></a>
+				</li>
+				<li class="menu-control menu-control-right">
+					<a href="javascript:;" data-click="next-menu"><i class="fa fa-angle-right"></i></a>
+				</li>
+			</ul>
+			<!-- end nav -->
+		</div>
+		
+   	</body>
+</html>

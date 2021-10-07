@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout-padrao"
+	xmlns:gurugo="http://gurugo.net">
+
+<section layout:fragment="conteudo">
+	<div class="content">
+   		<div class="container-fluid">
+        	<div class="row">
+            	<div class="col-md-12">
+                 	<div class="card stacked-form">
+              			<div class="card-header ">
+                        	<h4 class="card-title">Cadastrar Informação</h4>
+                      	</div>
+         				<div class="card-body ">
+                      		<form method="POST" th:object="${historicoContato}" th:action="@{/historico}">
+                      			<hr>
+                      			<div>
+                      				<strong>Funcionário: </strong><span th:text="${#authentication.principal.usuario.pessoa.nome}"></span><br>
+                      				<strong>Pessoa:</strong> <span th:text="${captacao.nome}"></span><br>
+                      			</div>
+                      			<hr>
+         						<gurugo:message/>
+
+                      			<input type="hidden" th:field="*{id}">
+                      			<input type="hidden" name="captacao" th:value="${captacao.id}">
+                      			<input type="hidden" name="responsavelEvento" th:value="${#authentication.principal.usuario.pessoa.id}">
+                      			                    			
+                      			<div class="row">
+                      				<div class="col-md-12">
+                      					<div class="form-group">
+		                              		<label for="titulo">Assunto</label>
+		                              		<div class="row">
+		                              			<div class="col-md-11">
+		                              				<select class="form-control" id="titulo" th:field="*{titulo}" gurugo:classforerror="titulo" >
+												      	<option value="">Selecione o assunto</option>
+												      	<option th:each="titulo : ${titulos}" th:value="${titulo.id}" th:text="${titulo.nomeTitulo}">Solteiro(a)</option>
+												    </select>
+		                              			</div>
+		                              			<div class="col-md-1">
+		                              				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCadastroRapidoTitulo">Novo</button>
+		                              			</div>
+		                              		</div>
+		                                   	
+		                              	</div>
+                      				</div>
+                      			</div>
+                      			<div class="row">
+                      				<div class="col-md-12">
+                      					<div class="form-group">
+		                              		<label for="mensagemEvento">Mensagem</label>
+		                                   	<input type="text" id="mensagemEvento" name="mensagemEvento" gurugo:classforerror="mensagemEvento" class="form-control" th:field="*{mensagemEvento}">
+		                              	</div>
+                      				</div>
+                      			</div>
+                      			
+                      			<hr class="my-4">
+                      			<div class="card-footer text-right">
+                      				<a th:href="@{/cliente}" class="btn btn-fill btn-warning">Cancelar</a>
+		                          	<button type="submit" class="btn btn-fill btn-success">Gravar</button>
+		                    	</div>
+                         	</form>
+                    	</div>
+               		</div>
+            	</div>
+    		</div>
+ 		</div>
+ 	</div>
+ 	<!-- Modal -->
+	<div class="modal fade" id="modalCadastroRapidoTitulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLongTitle">Inclusão rápida de novo assunto</h5>
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          				<span aria-hidden="true">&times;</span>
+        			</button>
+      			</div>
+	       		<form class="form-horizontal" method="POST" th:action="@{/gerencia/titulo}">
+      				<div class="modal-body">
+      					<div class="alert alert-danger d-none js-mensagem-cadastro-rapido-titulo" role="alert"></div>
+		       			<div class="form-group">
+                      		<label for="titulo">Assunto</label>
+                           	<input type="text" id="nomeTitulo" name="nomeTitulo" class="form-control" >
+                      	</div>
+		      		</div>
+	      			<div class="modal-footer">
+	        			<button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+	        			<button id="btn-salvar" type="button" class="btn btn-success js-modal-cadastro-titulo-salvar-btn">Gravar</button>
+	      			</div>
+		       	</form>
+    		</div>
+  		</div>
+	</div>
+</section>
+<section layout:fragment="javascript-extra">
+	<script th:src="@{/js/titulo.cadastro-rapido.js}"></script>
+</section>
+
+</html>

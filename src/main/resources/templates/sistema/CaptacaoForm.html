@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout-padrao"
+	xmlns:gurugo="http://gurugo.net">
+
+<section layout:fragment="conteudo">
+	<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol class="breadcrumb float-xl-right">
+				<li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Page Options</a></li>
+				<li class="breadcrumb-item active">Blank Page</li>
+			</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">Blank Page <small>header small text goes here...</small></h1>
+			<!-- end page-header -->
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<h4 class="panel-title">Panel Title here</h4>
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+					</div>
+				</div>
+				<div class="panel-body">
+					Panel Content Here
+				</div>
+			</div>
+			<!-- end panel -->
+		</div>
+	<div class="content">
+   		<div class="container-fluid">
+        	<div class="row">
+            	<div class="col-md-12">
+                 	<div class="card stacked-form">
+              			<div class="card-header ">
+                        	<h4 th:if="${captacao.novo}" class="card-title">Cadastrar Cliente para Captação</h4>
+                        	<h4 th:unless="${captacao.novo}" class="card-title" >Edição do Cliente: <small th:text="${captacao.nome}|"></small></h4>
+                      	</div>
+                      	<form method="POST" th:object="${captacao}" th:action="${captacao.novo} ? @{/captacao} : @{/captacao/{id}(id=${captacao.id})}">
+         					<div class="card-body ">
+                   				<gurugo:message/>
+	                         	<input type="hidden" th:field="*{id}">
+	                         	<div class="row">
+	                         		<div class="col-md-12">
+	                         			<div class="form-group has-label text-left">
+	                                   <label for="nome">
+	                                       Nome Completo
+	                                       <star class="star">*</star>
+	                                   </label>
+	                                   <input class="form-control" gurugo:classforerror="nome" th:field="*{nome}">
+	                               </div>
+	                         		</div>
+	                         	</div>
+	                         	<div class="row">
+	                         		<div class="col-md-7">
+	                         			<div class="form-group has-label text-left">
+		                                   	<label>
+		                                       	Email
+		                                       	<star class="star">*</star>
+		                                   	</label>
+		                                   	<input class="form-control" gurugo:classforerror="email" th:field="*{email}">
+	                               		</div>
+                        			</div>
+                         			<div class="col-md-5">
+	                         			<div class="form-group has-label text-left">
+		                                   	<label>
+		                                       	Telefone
+		                                       	<star class="star">*</star>
+		                                   	</label>
+		                                   <input class="form-control js-phone-number" gurugo:classforerror="telefone" th:field="*{telefone}">
+	                               		</div>
+                         			</div>
+                         		</div>
+                         		<div class="row">
+                         			<div class="col-md-6">
+                         				<div class="form-group has-label text-left">
+		                                   	<label>
+		                                       	Tipo de Dívida
+		                                   	</label>
+	                                   		<select class="form-control" gurugo:classforerror="tipoDivida" th:field="*{tipoDivida}">
+	                                   			<option value="">Selecione...</option>
+	                                   			<option th:each="tipo : ${tipoDividas}" th:value="${tipo}" th:text="${tipo.descricao}">Solteiro(a)</option>
+	                                   		</select>
+                               			</div>
+                         			</div>
+                         			<div class="col-md-6">
+                         				<div class="form-group has-label text-left">
+                                   			<label>
+                                       			Valor Financiado
+                                   			</label>
+                                   			<input class="form-control js-money" gurugo:classforerror="valorFinanciado" th:field="*{valorFinanciado}">
+                               			</div>
+                         			</div>
+                         		</div>
+                         		<div class="row">
+                         			<div class="col-md-3">
+                         				<div class="form-group has-label text-left">
+                                   			<label>
+                                       			QTD Totais de Parcelas
+                                   			</label>
+                                   			<input class="form-control" gurugo:classforerror="qtdTotalParcelas" th:field="*{qtdTotalParcelas}">
+                               			</div>
+                         			</div>
+                         			<div class="col-md-3">
+                         				<div class="form-group has-label text-left">
+                                   			<label>
+                                       			QTD Parcelas Pagas
+                                   			</label>
+                                   			<input class="form-control" gurugo:classforerror="qtdParcelasPagas" th:field="*{qtdParcelasPagas}">
+                               			</div>
+                         			</div>
+                         			<div class="col-md-3">
+                         				<div class="form-group has-label text-left">
+                                   			<label>
+                                       			QTD Parcelas Atrasadas
+                                   			</label>
+                                   			<input class="form-control" gurugo:classforerror="qtdParcelasEmAtraso" th:field="*{qtdParcelasEmAtraso}">
+                               			</div>
+                         			</div>
+                         			<div class="col-md-3">
+                         				<div class="form-group has-label text-left">
+                                   			<label>
+                                       			Valor Atual da Parcela
+                                   			</label>
+                                   			<input class="form-control js-money" gurugo:classforerror="valorAtualParcela" th:field="*{valorAtualParcela}">
+                               			</div>
+                         			</div>
+                         		</div>
+                         	</div>
+                         	<div class="card-footer text-right">
+                             	<div class="form-group pull-left">
+                                 	<div class="form-check">
+                                     	<label class="form-check-label">
+                                         	<input class="form-check-input" type="checkbox" value="">
+                                         	<span class="form-check-sign"></span>
+                                         	Solicitar conta gratuita
+                                     	</label>
+                                 	</div>
+                             	</div>
+                             	<div class="card-footer text-right">
+          							<a th:href="@{/captacao}" class="btn btn-fill btn-warning">Cancelar</a>
+                					<button type="submit" class="btn btn-fill btn-info">Gravar</button>
+          						</div>
+                             	<div class="clearfix"></div>
+                         	</div>
+               			</form>
+                    </div>
+              	</div>
+          	</div>
+    	</div>
+    </div>
+</section>
+<section layout:fragment="javascript-extra">
+	
+</section>
+
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout-padrao">
+
+<section layout:fragment="conteudo">
+	<div class="content">
+		<div class="container-fluid">
+    		<div class="row">
+        		<div class="col-lg-3 col-sm-6">
+            		<div class="card card-stats">
+                		<div class="card-body ">
+                    		<div class="row">
+                        		<div class="col-5">
+                            		<div class="icon-big text-center icon-warning">
+                                		<i class="nc-icon nc-bank text-success"></i>
+                            		</div>
+                        		</div>
+                        		<div class="col-7">
+		                            <div class="numbers">
+		                                <p class="card-category">Escritórios</p>
+		                                <h4 class="card-title" th:text="${qtdEscritorios}">0</h4>
+		                            </div>
+                        		</div>
+                    		</div>
+                		</div>
+		                <div class="card-footer ">
+		                    <hr>
+		                    <div class="stats">
+		                        <i class="fab fa-refresh"></i> Atualizar
+		                    </div>
+		                </div>
+            		</div>
+        		</div>
+		        <div class="col-lg-3 col-sm-6">
+		            <div class="card card-stats">
+		                <div class="card-body ">
+		                    <div class="row">
+		                        <div class="col-5">
+		                            <div class="icon-big text-center icon-warning">
+		                                <i class="nc-icon nc-single-copy-04 text-success"></i>
+		                            </div>
+		                        </div>
+		                        <div class="col-7">
+		                            <div class="numbers">
+		                                <p class="card-category">Contratos</p>
+		                                <h4 class="card-title" th:text="${qtdContratos}">0</h4>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer ">
+		                    <hr>
+		                    <div class="stats">
+		                        <i class="fa fa-refresh"></i> Atualizar
+		                    </div>
+		                </div>
+            		</div>
+        		</div>
+		        <div class="col-lg-3 col-sm-6">
+		            <div class="card card-stats">
+		                <div class="card-body ">
+		                    <div class="row">
+		                        <div class="col-5">
+		                            <div class="icon-big text-center icon-warning">
+		                                <i class="nc-icon nc-single-02 text-danger"></i>
+		                            </div>
+		                        </div>
+		                        <div class="col-7">
+		                            <div class="numbers">
+		                                <p class="card-category">Clientes</p>
+		                                <h4 class="card-title" th:text="${qtdClientesComContrato}">0</h4>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer ">
+		                    <hr>
+		                    <div class="stats">
+		                        <i class="fa fa-refresh"></i> Atualizar
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="col-lg-3 col-sm-6">
+		            <div class="card card-stats">
+		                <div class="card-body ">
+		                    <div class="row">
+		                        <div class="col-5">
+		                            <div class="icon-big text-center icon-warning">
+		                                <i class="nc-icon nc-circle-09 text-primary"></i>
+		                            </div>
+		                        </div>
+		                        <div class="col-7">
+		                            <div class="numbers">
+		                                <p class="card-category">Captação</p>
+		                                <h4 class="card-title"  th:text="${#lists.size(captacoes)}">0</h4>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer ">
+		                    <hr>
+		                    <div class="stats">
+		                        <i class="fa fa-refresh"></i> Atualizar
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+    		</div>
+		    <div class="row">
+		        <div class="col-md-12">
+		            <div class="card ">
+		                <div class="card-header ">
+		                    <h4 class="card-title">Escritórios por Localização</h4>
+		                    <p class="card-category">Contratos existentes e proporção geral</p>
+		                </div>
+		                <div class="card-body ">
+		                    <div class="row">
+		                        <div class="col-md-6">
+		                            <div class="table-responsive">
+		                                <table class="table">
+		                                    <tbody>
+		                                        <tr th:each="escritorio : ${escritorios}">
+		                                            <td>
+		                                                <div class="flag">
+		                                                    <img class="bandeira" th:src="@{/img/bandeiras/{uf}.png(uf = ${escritorio.endereco.estado})}"> </div>
+		                                            </td>
+		                                            <td th:text="${escritorio.nome}">DF</td>
+		                                            <td class="text-right">
+		                                                0 Contratos
+		                                            </td>
+		                                            <td class="text-right">
+		                                                0%
+		                                            </td>
+		                                        </tr>
+		                                    </tbody>
+		                                </table>
+		                           	</div>
+		                      	</div>
+		                        <div class="col-md-6 ml-auto mr-auto">
+		                        	<div id="worldMap" style="height: 300px;"></div>
+		                       	</div>
+		                  	</div>
+                       	</div>
+             		</div>
+        		</div>
+    		</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card ">
+                        <div class="card-header ">
+                            <h4 class="card-title">Contratos</h4>
+                            <p class="card-category">Crescimento mensal</p>
+                        </div>
+                        <div class="card-body ">
+                            <div id=chartHours class="ct-chart"></div>
+                        </div>
+                        <div class="card-footer ">
+                            <div class="legend">
+                                <i class="fa fa-circle text-info"></i> Clientes
+                                <i class="fa fa-circle text-danger"></i> Contratos
+                                <i class="fa fa-circle text-warning"></i> Captação
+                            </div>
+                            <hr>
+                            <div class="stats">
+                                <i class="fa fa-history"></i> Atualizado a 3 minutos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       	</div>
+   	</div>
+</section>
+<section layout:fragment="javascript-extra">
+
+	<script type="text/javascript">
+    
+	    $.notify({
+	        icon: "nc-icon nc-money-coins",
+	        message: "Bem vindo ao <b>Debitum</b> <br> Sistema de Gestão de Negociações."
+	    }, {
+	        timer: 1000,
+	    });
+	    
+	</script>
+
+</section>
+
+</html>

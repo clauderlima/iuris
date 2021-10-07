@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	xmlns:gurugo="http://gurugo.net">
+	
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+	
+</head>
+
+<section layout:fragment="conteudo">
+	<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol class="breadcrumb float-xl-right">
+				<li class="breadcrumb-item"><a href="javascript:;">Início</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Procuração</a></li>
+				<li class="breadcrumb-item active">Poderes</li>
+			</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">Poderes <small>cadastro no sistema</small></h1>
+			<!-- end page-header -->
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<h4 class="panel-title">Formulário</h4>
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="card stacked-form">
+                      		<form method="POST" th:object="${poder}" th:action="@{/gerencia/poder/salvar}">
+              			<div class="card-header ">
+                        	<h4 class="card-title">Cadastrar Poder</h4>
+                      	</div>
+         				<div class="card-body ">
+         						<gurugo:message/>
+                      			<input type="hidden" th:field="*{id}">
+                      			<div class="row">
+                      				<div class="col-md-10">
+                      					<div class="form-group">
+		                              		<label for="descricao">Descrição</label>
+		                                   	<input type="text" id="descricao" name="descricao" gurugo:classforerror="descricao" class="form-control" th:field="*{descricao}">
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-2">
+                      					<div class="form-group">
+		                              		<label for="tipoPoder">Tipo Poder</label>
+		                                   	<select class="form-control" th:field="*{tipoPoder}">
+		                                   		<option value="">Selecione...</option>
+		                                   		<option th:each="poder : ${poderes}" th:value="${poder}">
+		                                   			<span th:text="${poder.descricao}"></span>
+		                                   		</option>
+		                                   	</select>
+		                              	</div>
+                      				</div>
+                      			</div>
+                    		</div>
+                    		<div class="card-footer text-right">
+                    			<a th:href="@{/gerencia/poder}" class="btn btn-secondary">Cancelar</a>
+                          		<button type="submit" class="btn btn-fill btn-info">Gravar</button>
+                    		</div>
+                         </form>
+               		</div>
+				</div>
+			</div>
+			<!-- end panel -->
+		</div>
+</section>
+<section layout:fragment="javascript-extra">
+	
+</section>
+
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}">
+
+<section layout:fragment="conteudo">
+	<div id="content" class="content">
+		<!-- begin breadcrumb -->
+			<ol class="breadcrumb float-xl-right">
+				<li class="breadcrumb-item"><a href="javascript:;">Inicio</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Clientes</a></li>
+				<li class="breadcrumb-item active">Ficha</li>
+			</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">Ficha de Cadastro <small th:text="${cliente.nome}">header small text goes here...</small></h1>
+			<!-- end page-header -->
+			
+			<!-- begin row -->
+			<div class="row">
+				<div class="col-xl-12">
+					
+					
+					<ul class="nav justify-content-center">
+						<li class="nav-item text-center">
+							<a href="#default-tab-1" data-toggle="tab" class="nav-link active">
+								<span class="d-sm-none">Dados</span>
+								<span class="d-sm-block d-none">
+									<i class="fas fa-user fa-3x"></i>
+									<strong class="d-sm-block d-none text-primary">Dados</strong>
+								</span>
+							</a>
+						</li>
+						<li class="nav-item text-center">
+							<a href="#default-tab-2" data-toggle="tab" class="nav-link">
+								<span class="d-sm-none">Contrato</span>
+								<i class="fas fa-file-alt fa-3x"></i>
+								<strong class="d-sm-block d-none text-primary">Contrato</strong>
+							</a>
+						</li>
+						<li class="nav-item text-center">
+							<a href="#default-tab-3" data-toggle="tab" class="nav-link">
+								<span class="d-sm-none">Histórico</span>
+								<i class="fas fa-comments fa-3x"></i>
+								<strong class="d-sm-block d-none text-primary">Histórico</strong>
+							</a>
+						</li>
+						<li class="nav-item text-center">
+							<a href="#default-tab-4" data-toggle="tab" class="nav-link">
+								<span class="d-sm-none">Financeiro</span>
+								<i class="fas fa-money-bill-alt fa-3x"></i>
+								<strong class="d-sm-block d-none text-primary">Financeiro</strong>
+							</a>
+						</li>
+					</ul>
+					<!-- end nav-tabs -->
+					<!-- begin tab-content -->
+					<div class="tab-content">
+						<div class="tab-pane fade active show" id="default-tab-1">
+							<div class="card border-0">
+								<div class="card-header f-w-600">
+									<h4>Cadastro</h4>
+								</div>
+							<div class="card-body">
+	                            	<div class="row">
+	                            		<div class="col-md-10">
+	                            			<div class="titulo">Informações Pessoais</div>
+	                            		</div>
+	                            		<div class="col-md-2">
+	                            		</div>
+	                            	</div>
+	                            	<hr class="risco">
+	                            	<div class="row">
+	                            		<div class="col-md-6">
+	                            			<div class="label">Nome:</div><br>
+	                            			<p th:text="${cliente.nome}"></p>
+	                            		</div>
+	                            		<div class="col-md-3">
+	                            			<div class="label">Sexo:</div><br>
+	                            			<span th:text="${cliente.sexo}"></span>
+	                            		</div>
+	                            		<div class="col-md-3">
+	                            			<div class="label">Profissão:</div><br>
+	                            			<span th:text="${cliente.profissao}"></span>
+	                            		</div>
+	                            	</div>
+	                            	<div class="row">
+	                            		<div class="col-md-3">
+	                            			<div class="label">CPF:</div><br>
+	                            			<span th:text="${cliente.cpf}"></span>
+	                            		</div>
+	                            		<div class="col-md-2">
+	                            			<div class="label">RG:</div><br>
+	                            			<span th:text="${cliente.rg}"></span>
+	                            		</div>
+	                            		<div class="col-md-1">
+	                            			<div class="label">O. Exp:</div><br>
+	                            			<span th:text="${cliente.orgaoExpedidor}"></span>
+	                            		</div>
+	                            		<div class="col-md-2">
+	                            			<div class="label">Data Nascimento:</div><br>
+	                            			<span th:text="${#temporals.format(cliente.dataNascimento, 'dd/MM/yyyy')}"></span>
+	                            		</div>
+	                            		<div class="col-md-3">
+	                            			<div class="label">Estado Civil:</div><br>
+	                            			<span th:text="${cliente.estadoCivil}"></span>
+	                            		</div>
+	                            	</div>
+	                            	<br><br>
+	                            	<div class="row">
+	                            		<div class="col-md-6">
+	                            			<div class="titulo">Contato</div>
+	                            		</div>
+	                            		<div class="col-md-6">
+	                            		</div>
+	                            	</div>
+	                            	<hr class="risco">
+	                            	<div class="row">
+                            			<div class="col-md-3">
+	                            			<div>Celular:</div><br>
+	                            			<span th:text="${cliente.telefoneCelular.numero}"></span>
+	                            		</div>
+                            			<div class="col-md-3"><br>
+	                            			<div class="label">Telefone Fixo:</div>
+	                            			<span th:text="${cliente.telefoneFixo.numero}"></span>
+	                            		</div>
+                            			<div class="col-md-3"><br>
+	                            			<div class="label">Email:</div>
+	                            			<span th:text="${cliente.email}"></span>
+	                            		</div>
+	                            	</div>
+	                            	<div class="row">
+	                            		<div class="col-md-6"><br>
+	                            			<div class="titulo">Endereço</div>
+	                            		</div>
+	                            		<div class="col-md-6">
+	                            		</div>
+	                            	</div>
+	                            	<hr class="risco">
+	                            	<div class="row">
+	                            		<div class="col-md-6"><br>
+	                            			<div class="label">Logradouro:</div><br>
+	                            			<span th:text="${cliente.endereco.logradouro}"></span>
+	                            		</div>
+	                            		<div class="col-md-6"><br>
+	                            			<div class="label">Número:</div><br>
+	                            			<span th:text="${cliente.endereco.numero}"></span>
+	                            		</div>
+	                            	</div>
+	                            	<div class="row">
+	                            		<div class="col-md-4"><br>
+	                            			<div class="label">Bairro:</div><br>
+	                            			<span th:text="${cliente.endereco.bairro}"></span>
+	                            		</div>
+	                            		<div class="col-md-4"><br>
+	                            			<div class="label">Cidade:</div><br>
+	                            			<span th:text="${cliente.endereco.cidade} + ' - ' + ${cliente.endereco.estado}"></span>
+	                            		</div>
+	                            		<div class="col-md-4"><br>
+	                            			<div class="label">CEP:</div><br>
+	                            			<span th:text="${cliente.endereco.cep}"></span>
+	                            		</div>
+	                            	</div>
+	                        	</div>
+							</div>
+						</div>
+						<!-- end tab-pane -->
+						<!-- begin tab-pane -->
+						<div class="tab-pane fade" id="default-tab-2">
+							<div class="card">
+	                            <div class="card-header">
+	                                <div class="row">
+	                                	<div class="col-md-9">
+	                            			<h4 class="card-title">Contrato</h4>
+	                            		</div>
+	                            		<div class="col-md-3 text-center">
+	                            			<th:block th:if="${cliente.contrato}" sec:authorize="hasRole('ROLE_CONTRATO_INCLUIR')">
+		                            			<a th:href="@{/imprimir/contrato/{id}(id = ${cliente.contrato.id})}" target="_blank" class="btn btn-fill btn-info print"  rel="tooltip" data-original-title="Imprimir Contrato">Imprimir</a>
+		                            			<a th:href="@{/contrato/{id}(id=${cliente.contrato.id})}" class="btn btn-fill btn-warning">Editar Contrato</a>
+	                            			</th:block>
+	                            			<th:block th:unless="${cliente.contrato}" sec:authorize="hasRole('ROLE_CONTRATO_INCLUIR')">
+	                            				<a th:href="@{/contrato/novo/{id}(id=${cliente.id})}" class="btn btn-fill btn-success">Gerar Contrato</a>
+	                            			</th:block>
+	                            			<th:block th:if="${cliente.procuracao}" sec:authorize="hasRole('ROLE_CONTRATO_INCLUIR')">
+		                            			<a th:href="@{/imprimir/procuracao/{id}(id = ${cliente.procuracao.id})}" target="_blank" class="btn btn-fill btn-info print"  rel="tooltip" data-original-title="Imprimir Contrato">Imprimir</a>
+		                            			<a th:href="@{/contrato/{id}(id=${cliente.contrato.id})}" class="btn btn-fill btn-warning">Editar Procuração</a>
+	                            			</th:block>
+	                            			<th:block th:unless="${cliente.procuracao}" sec:authorize="hasRole('ROLE_CONTRATO_INCLUIR')">
+	                            				<a th:href="@{/procuracao/novo/{id}(id=${cliente.id})}" class="btn btn-fill btn-success">Gerar Procuração</a>
+	                            			</th:block>
+	                            		</div>
+	                                </div>
+	                                <div class="row">
+	                                	<div class="col-md-3">
+	                                		<i><p class="category"><strong>Titular Financiamento: </strong><span th:text="${cliente.contrato} ? ${cliente.contrato.titularFinanciamento.nome} : 'Sem contrato'"></span></p></i>
+	                                	</div>
+	                                	<div class="col-md-3">
+	                                		<i><p class="category"><strong>Instituição Financeira: </strong><span th:text="${cliente.contrato} ? ${cliente.contrato.divida.financeira} : 'Sem contrato'"></span></p></i>
+	                                	</div>
+	                                </div>
+	                                
+	                            </div>
+	                            <th:block th:if="${cliente.contrato}">
+		                            <div class="card-body">
+		                            	<div class="row">
+		                            		<div class="col-md-10">
+		                            			<div class="titulo">Informações</div>
+		                            		</div>
+		                            		<div class="col-md-2 text-center">
+		                            		</div>
+		                            	</div>
+		                            	<hr class="risco">
+		                            	<div class="row">
+		                            		<div class="col-md-2">
+		                            			<div class="label">Número:</div>
+		                            			<span th:text="${cliente.contrato.numero}"></span>
+		                            		</div>
+		                            		<div class="col-md-5">
+		                            			<div class="label">Cliente:</div>
+		                            			<span th:text="${cliente.nome}"></span>
+		                            		</div>
+		                            		<div class="col-md-3">
+		                            			<div class="label">Data:</div>
+		                            			<span th:text="${#temporals.format(cliente.contrato.dataAssinatura, 'dd/MM/yyyy')}"></span>
+		                            		</div>
+		                            		<div class="col-md-2">
+		                            			<div class="label">Status:</div>
+		                            			<span>Vigente</span>
+		                            		</div>
+		                            	</div>
+		                            	<br>
+		                            	
+		                            	<div class="row">
+		                            		<div class="col-md-10">
+		                            			<div class="titulo">Titular do financiamento</div>
+		                            		</div>
+		                            		<div class="col-md-2 text-center">
+		                            		</div>
+		                            	</div>
+		                            	<hr class="risco">
+		                            	<div class="row">
+		                            		<div class="col-md-3">
+		                            			<div class="label">Nome:</div>
+		                            			<span th:text="${cliente.contrato.titularFinanciamento.nome}"></span>
+		                            		</div>
+		                            		<div class="col-md-2">
+		                            			<div class="label">CPF:</div>
+		                            			<span th:text="${cliente.contrato.titularFinanciamento.cpf}"></span>
+		                            		</div>
+		                            		<div class="col-md-3">
+		                            			<div class="label">RG:</div>
+		                            			<span th:text="|${cliente.contrato.titularFinanciamento.rg} ${cliente.contrato.titularFinanciamento.orgaoExpedidor}|"></span>
+		                            		</div>
+		                            		<div class="col-md-2">
+		                            			<div class="label">Data Nascimento:</div>
+		                            			<span th:text="${#temporals.format(cliente.contrato.titularFinanciamento.dataNascimento, 'dd/MM/yyyy')}"></span>
+		                            		</div>
+		                            		<div class="col-md-2">
+		                            			<div class="label">Sexo:</div>
+		                            			<span th:text="${cliente.contrato.titularFinanciamento.sexo}"></span>
+		                            		</div>
+		                            	</div>
+		                            	<br>
+		                            	
+		                            	<div class="row">
+		                            		<div class="col-md-6">
+		                            			<div class="titulo">Objeto</div>
+		                            		</div>
+		                            		<div class="col-md-6">
+		                            		</div>
+		                            	</div>
+		                            	<hr class="risco">
+		                            	<th:block th:if="${cliente.contrato.veiculoDivida}">
+			                            	<div class="row">
+		                            			<div class="col-md-2">
+			                            			<div class="label">Placa</div>
+			                            			<span th:text="${cliente.contrato.veiculoDivida.placa} + ' / ' + ${cliente.contrato.veiculoDivida.ufPlaca}"></span>
+			                            		</div>
+			                            		<div class="col-md-2">
+			                            			<div class="label">Renavam</div>
+			                            			<span th:text="${cliente.contrato.veiculoDivida.renavam}"></span>
+			                            		</div>
+		                            			<div class="col-md-2">
+			                            			<div class="label">Marca/Modelo:</div>
+			                            			<span th:text="${cliente.contrato.veiculoDivida.marcaModelo}"></span>
+			                            		</div>
+			                            		<div class="col-md-2">
+			                            			<div class="label">Cor</div>
+			                            			<span th:text="${cliente.contrato.veiculoDivida.cor}"></span>
+			                            		</div>
+		                            			<div class="col-md-2">
+			                            			<div class="label">Ano</div>
+			                            			<span th:text="${cliente.contrato.veiculoDivida.anoModelo} + ' / ' + ${cliente.contrato.veiculoDivida.anoFabricacao}"></span>
+			                            		</div>
+			                            		<div class="col-md-2">
+			                            			<div class="label">Status</div>
+			                            			<span th:text="${cliente.contrato.veiculoDivida.status}"></span>
+			                            		</div>
+			                            	</div>
+		                            	</th:block>
+		                            	<th:block th:if="${cliente.contrato.cartaoDivida}">
+		                            		<div class="row">
+		                            			<div class="col-md-4">
+			                            			<div class="label">Nome</div>
+			                            			<span th:text="${cliente.contrato.cartaoDivida.nome}"></span>
+			                            		</div>
+			                            		<div class="col-md-4">
+			                            			<div class="label">Últimos Números</div>
+			                            			<span th:text="${cliente.contrato.cartaoDivida.ultimosNumeros}"></span>
+			                            		</div>
+		                            			<div class="col-md-4">
+			                            			<div class="label">Bandeira</div>
+			                            			<span th:text="${cliente.contrato.cartaoDivida.bandeira}"></span>
+			                            		</div>
+			                            	</div>
+		                            	</th:block>
+		                            	<th:block th:if="${cliente.contrato.emprestimoDivida}">
+		                            		<div class="row">
+		                            			<div class="col-md-6">
+			                            			<div class="label">Nome Instituição</div>
+			                            			<span th:text="${cliente.contrato.emprestimoDivida.nomeInstituicao}"></span>
+			                            		</div>
+			                            		<div class="col-md-3">
+			                            			<div class="label">Agência</div>
+			                            			<span th:text="${cliente.contrato.emprestimoDivida.agencia}"></span>
+			                            		</div>
+		                            			<div class="col-md-3">
+			                            			<div class="label">Conta Corrente</div>
+			                            			<span th:text="${cliente.contrato.emprestimoDivida.contaCorrente}"></span>
+			                            		</div>
+			                            	</div>
+		                            	</th:block>
+		                            	
+		                        	</div>
+		                        </th:block>
+	                        </div>
+						</div>
+						<!-- end tab-pane -->
+						<!-- begin tab-pane -->
+						<div class="tab-pane fade" id="default-tab-3">
+							<div class="card">
+	                            <div class="card-header">
+	                                <div class="row">
+	                                	<div class="col-md-10">
+	                            			<h4 class="card-title">Histórico</h4>
+	                            		</div>
+	                            		<div class="col-md-2 text-center" >
+		                            		<a th:href="@{/historico/novo/{id}(id=${cliente.id})}" class="btn btn-fill btn-warning">Nova Informação</a>
+	                            		</div>
+	                                </div>
+	                                <i><p class="category"><strong>Cliente: </strong><span th:text="${cliente.nome}"></span></p></i>
+	                            </div>
+	                            <div class="card-body">
+                        			<div id="vertical-timeline" class="vertical-container dark-timeline center-orientation" >
+                            			<div class="vertical-timeline-block" th:each="historico : ${historicos}">
+                                			<div class="vertical-timeline-icon navy-bg">
+			                                    <i class="far fa-2x" th:classappend="${historico.titulo} ? ${historico.titulo.icone} : ''"></i>
+			                                </div>
+                                			<div class="vertical-timeline-content">
+                                    			<h2 th:text="${historico.titulo} ? ${historico.titulo.nomeTitulo} : ''">Meeting</h2>
+                                    			<div class="row">
+                                    				<div class="col-md-12">
+		                                    			<p th:text="${historico.mensagemEvento}"></p>
+                                    				</div>
+                                    			</div>
+                                    			<div class="card">
+                                    				<th:block class="row" th:if="${historico.dataHoraContato}">
+	                                    				<div class="col-md-12">
+	                                    					<p class="category"> 
+	                                    						<span th:text="${historico.mensagemContato}">Monicaducts. Below please find the current status of the sale.</span>
+	                                    					</p>
+	                                    				</div>
+	                                    				<div class="col-md-12">
+	                                    					<p class="text-right">
+	                                    						<span th:text="${historico.responsavelContato} ? ${historico.responsavelContato.nome} : ''"></span> <br>
+				                                        		<small style="color: #1ab394" th:text="${#temporals.day(historico.dataHoraContato)} + ' de ' + ${#temporals.monthName(historico.dataHoraContato)}
+				                                        			+ ' de ' + ${#temporals.year(historico.dataHoraContato)} + ' &agrave;s ' + ${#temporals.hour(historico.dataHoraContato)}
+				                                        			+ ':' + ${#temporals.minute(historico.dataHoraContato)}+ 'h'">Dec 24
+				                                        		</small>
+				                                        	</p>
+	                                    				</div>
+	                  
+                                    				</th:block>
+                                    			</div>
+                                    			
+                                    			<div class="row" th:unless="${historico.dataHoraContato}">
+                                    				<div class="col-md-8">
+                                    				</div>
+                                    				<div class="col-md-2">
+                                    					<br>
+                                    					<a href="#" th:xx="${historico.id}" class="btn informacao btn-sm btn-primary" data-toggle="modal" data-target="#modalLancarInformacao"> Lançar Informação</a>
+                                    				</div>
+                                    			</div>
+                                    			
+			                                    <span class="vertical-date">
+			                                        <span th:text="${historico.responsavelEvento.nome}"></span> <br>
+			                                        <small th:text="${#temporals.day(historico.dataHoraEvento)} + ' de ' + ${#temporals.monthName(historico.dataHoraEvento)}
+			                                        + ' de ' + ${#temporals.year(historico.dataHoraEvento)} + ' &agrave;s ' + ${#temporals.hour(historico.dataHoraEvento)}
+			                                        + ':' + ${#temporals.minute(historico.dataHoraEvento)}+ 'h'">Dec 24</small>
+			                                    </span>
+                                			</div>
+                            			</div>
+                        			</div>
+                    			</div>
+	                        </div>
+						</div>
+						<!-- end tab-pane -->
+						<div class="tab-pane fade" id="default-tab-4">
+							<div class="card">
+	                            <div class="card-header">
+	                                <h4 class="card-title">Financeiro</h4>
+	                                <p class="category">Controle de pagamento do contrato</p>
+	                            </div>
+	                            <div class="card-body">
+	                                <div class="row">
+		                            	<div class="col-md-6">
+		                            		<div class="titulo">Forma de pagamento</div>
+		                            	</div>
+		                            	<div class="col-md-6">
+		                            	</div>
+		                            </div>
+		                            <hr class="risco">
+		                            <div class="row">
+		                            	<div class="col-md-2">
+		                            		<div class="label">Tipo de Pagamento:</div>
+		                            		<span th:text="${cliente.contrato?.tipoPagamento} ? ${cliente.contrato.tipoPagamento.descricao} : ''"></span>
+		                            	</div>
+		                            	<div class="col-md-2">
+		                            		<div class="label">QTD Parcelas:</div>
+		                            		<span th:text="${cliente.contrato?.qtdParcelasPagamento}"></span>
+		                            	</div>
+		                            	<div class="col-md-4">
+		                            		<div class="label">Valor da Parcela:</div>
+		                            		<span th:text="${#numbers.formatCurrency(cliente.contrato?.valorParcela)}"></span>
+		                            	</div>
+		                            	<div class="col-md-4">
+		                            		<div class="label">Total:</div>
+		                            		<span th:text="${#numbers.formatCurrency(cliente.contrato?.valorContrato)}"></span>
+		                            	</div>
+		                            </div>
+	                            </div>
+	                            <div class="card-body">
+	                                <div class="row">
+		                            	<div class="col-md-6">
+		                            		<div class="titulo">Controle de pagamentos realizados</div>
+		                            	</div>
+		                            	<div class="col-md-6">
+		                            	</div>
+		                            </div>
+		                            <hr class="risco">
+		                            <div class="row">
+		                            	<div class="col-md-12">
+                        					<div class="card card-plain">
+	                            				<div class="table-responsive ">
+	                                				<table class="table table-hover table-striped">
+					                                    <thead>
+					                                        <tr>
+					                                        	<th>#</th>
+					                                    		<th>Parcela</th>
+					                                    		<th>Data Vencimento</th>
+					                                    		<th>Valor</th>
+					                                    		<th>Data Pagamento</th>
+					                                    		<th>Valor Pagamento</th>
+					                                    		<th>Status</th>
+					                                    		<th>Opções</th>
+	                                    					</tr>
+	                                    				</thead>
+	                                    				<tbody>
+	                                        				<tr th:each="parcela, numero: ${cliente.contrato?.parcelas}">
+	                                        					<td th:text="${numero.count}">1</td>
+	                                        					<td> 1/<span th:text="${parcela.parcela}"></span></td>
+	                                        					<td th:text="${#temporals.format(parcela.dataVencimento, 'dd/MM/yyyy')}">10/12/2019</td>
+	                                        					<td th:text="${#numbers.formatCurrency(parcela.valor)}">R$450,00</td>
+	                                        					<td th:text="${parcela.dataPagamento} ? ${#temporals.format(parcela.dataPagamento?, 'dd/MM/yyyy')} : ''">10/12/2019</td>
+	                                        					<td th:text="${parcela.valorPagamento} ? ${#numbers.formatCurrency(parcela.valorPagamento)} : ''">R$450,00</td>
+	                                        					<td th:text="${parcela.status.descricao}">Paga</td>
+	                                        					<td>
+	                                        						<a th:href="@{/parcela/editar/{id}(id=${parcela.id})}">
+		                                        						<i class="fa fa-edit"></i>
+	                                        						</a>&nbsp;&nbsp;
+	                                        						<a th:href="@{/parcela/remover/{id}(id=${parcela.id})}" class="btn btn-danger btn-link btn-xs">
+		                                        						<i class="fa fa-times"></i>
+	                                        						</a>
+	                                        					</td>
+	                                        				</tr>
+	                                    				</tbody>
+	                                				</table>
+	                            				</div>
+                        					</div>
+                    					</div>
+		                            </div>
+	                            </div>
+	                        </div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- end #content -->
+		
+	
+	<!-- Modal -->
+	<div class="modal fade" id="modalLancarInformacao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLongTitle">Lançamento de informação ao cliente</h5>
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          				<span aria-hidden="true">&times;</span>
+        			</button>
+      			</div>
+	       		<form class="form-horizontal" method="POST" th:action="@{/historico/contato}">
+<!-- 	       			<input type="hidden" name="responsavelContato" id="responsavelContato" th:value="${#authentication.principal.usuario.pessoa.id}"> -->
+      				<div class="modal-body">
+      					<div class="alert alert-danger d-none js-mensagem-cadastro-rapido-titulo" role="alert"></div>
+		       			<div class="row">
+		       				<div class="col-md-6">
+		       					<div class="form-group">
+		                      		<label for="tipoContato">Tipo de contato</label>
+		                      		<select id="tipoContato" name="tipoContato" class="form-control">
+		                      			<option value="">Selecione..</option>
+		                      			<option value="telefone">Telefone</option>
+		                      			<option value="WhatsApp">WhatsApp</option>
+		                      			<option value="e-mail">E-mail</option>
+		                      			<option value="sistema">Sistema</option>
+		                      			<option value="pessoal">Pessoal</option>
+		                      		</select>
+		                      	</div>
+		       				</div>
+		       				<div class="col-md-6">
+		       					<div class="form-group">
+		                      		<label for="status">Prioridade</label>
+		                      		<select id="status" name="status" class="form-control">
+		                      			<option value="">Selecione..</option>
+		                      			<option value="baixa">Baixa</option>
+		                      			<option value="normal">Normal</option>
+		                      			<option value="alta">Alta</option>
+		                      		</select>
+                      			</div>
+		       				</div>
+		       			</div>
+		       			<div class="row">
+		       				<div class="col-md-12">
+		       					<div class="form-group">
+		                      		<label for="mensagemContato">Informação</label>
+		                      		<input type="text" name="mensagemContato" id="mensagemContato" class="form-control">
+		                      	</div>
+		       				</div>
+		       				
+		       			</div>
+		      		</div>
+	      			<div class="modal-footer">
+	        			<button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+	        			<button id="btn-salvar" type="button" class="btn btn-success js-modal-cadastro-titulo-salvar-btn">Gravar</button>
+	      			</div>
+		       	</form>
+    		</div>
+  		</div>
+	</div>
+	
+</section>
+<section layout:fragment="javascript-extra">
+	<script th:src="@{/js/lancar-informacao-historico.js}"></script>
+</section>
+
+</html>

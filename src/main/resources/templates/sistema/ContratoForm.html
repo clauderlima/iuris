@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout-padrao"
+	xmlns:gurugo="http://gurugo.net">
+
+	<section layout:fragment="conteudo">
+		<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol class="breadcrumb float-xl-right">
+				<li class="breadcrumb-item"><a href="javascript:;">Início</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Cadastro</a></li>
+				<li class="breadcrumb-item active">Funcionário</li>
+			</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">Funcionários <small>cadastro no sistema</small></h1>
+			<!-- end page-header -->
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<h4 class="panel-title">Formulário</h4>
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+					</div>
+				</div>
+				<div class="panel-body">
+					Panel Content Here
+				</div>
+			</div>
+			<!-- end panel -->
+		</div>
+	<div class="content">
+   		<div class="container-fluid">
+        	<div class="row">
+            	<div class="col-md-12">
+                 	<div class="card stacked-form">
+              			<div class="card-header ">
+                        	<h4 th:if="${contrato.novo}" class="card-title">Cadastrar Contrato</h4>
+                        	<h4 th:unless="${contrato.novo}" class="card-title" >Edição do Contrato: <small th:text="${contrato.numero}|"></small></h4>
+                      	</div>
+         				<div class="card-body ">
+                      		<form method="POST" th:object="${contrato}" th:action="${contrato.novo} ? @{/contrato} : @{/contrato/{id}(id=${contrato.id})}">
+         						<gurugo:message/>
+
+                      			<input type="hidden" th:field="*{id}">
+                      			<div th:object="${cliente}">
+                      				<input type="hidden" id="cliente" name="cliente" th:value="*{id}">
+                      			</div>
+                      			<div class="row">
+                      				<div class="col-md-6">
+                      					<b>Cliente: </b><span id="nomeCliente" th:text="${cliente.nome}"></span>
+                      					<input type="hidden" id="cliente.id" th:value="${cliente.id}">
+                      				</div>
+                      				<div class="col-md-3">
+                      					<b>CPF: </b><span th:text="${cliente.cpf}"></span>
+                      				</div>
+                      				<div class="col-md-3">
+                      					<b>Telefone: </b><span th:text="${cliente.telefoneCelular.numero}"></span>
+                      				</div>
+                      			</div>
+                      			<hr>
+                      			<div class="row">
+                      				<div class="col-md-2">
+                      					<div class="form-group">
+		                              		<label for="numero">Número</label>
+		                                   	<input type="text" id="numero" name="numero" gurugo:classforerror="numero" placeholder="Número do contrato" class="form-control" th:field="*{numero}">
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-4">
+                      					<div class="form-group">
+		                              		<label for="consultor">Consultor</label>
+		                              		<select class="form-control" id="consultor" th:field="*{consultor}" gurugo:classforerror="consultor" >
+										      	<option value="">Selecione ...</option>
+										      	<option th:each="consultor : ${consultores}" th:value="${consultor.id}" th:text="${consultor.nome}">Solteiro(a)</option>
+										    </select>
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-4">
+                      					<div class="form-group">
+		                              		<label for="escritorio">Escritório</label>
+		                                   	<select class="form-control" id="escritorio" th:field="*{escritorio}" gurugo:classforerror="escritorio" >
+										      	<option value="">Selecione ...</option>
+										      	<option th:each="escritorio : ${escritorios}" th:value="${escritorio.id}" th:text="${escritorio.nome}">Solteiro(a)</option>
+										    </select>
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-2">
+                      				    <div class="form-group">
+		                              		<label for="dataAssinatura">Data Contrato</label>
+		                                   	<input type="date" id="dataAssinatura" name="dataAssinatura" gurugo:classforerror="dataAssinatura" 
+		                                   		class="form-control datepicker" th:field="*{dataAssinatura}">
+		                              	</div>
+                      				</div>
+                      			</div>
+                      			<hr>
+                      			<div class="row">
+                      				<div class="col-md-3">
+                      					<div class="form-group">
+		                              		<label for="tipoPagamento">Forma de Pagamento</label>
+		                                   	<select class="form-control" id="tipoPagamento" th:field="*{tipoPagamento}" gurugo:classforerror="tipoPagamento" 
+		                                   		required="true">
+										      	<option value="">Selecione ...</option>
+										      	<option th:each="pagamento : ${pagamentos}" th:value="${pagamento}" th:text="${pagamento.descricao}">Solteiro(a)</option>
+										    </select>
+										    <label id="tipoPagamento" class="error" for="required">Informe a forma de pagamento.</label>
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-1">
+                      				</div>
+                      				<div class="col-md-2">
+                      				    <div class="form-group">
+		                              		<label for="qtdParcelasPagamento">QTD Parcelas</label>
+		                                   	<select class="form-control" id="qtdParcelasPagamento" th:field="*{qtdParcelasPagamento}" 
+		                                   		required="true" gurugo:classforerror="qtdParcelasPagamento" >
+										      	<option value="">Selecione..</option>
+										      	<option value="1">1x</option>
+										      	<option value="2">2x</option>
+										      	<option value="3">3x</option>
+										      	<option value="4">4x</option>
+										      	<option value="5">5x</option>
+										    </select>
+										    <label id="qtdParcelasPagamento" class="error" for="required">Informe em quantas vezes será pago.</label>
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-3">
+                      				    <div class="form-group">
+		                              		<label for="valorParcela">Valor</label>
+		                                   	<input type="text" id="valorParcela" name="valorParcela" gurugo:classforerror="valorParcela" 
+		                                   		required="true" class="form-control js-money" th:field="*{valorParcela}">
+		                              	</div>
+		                              	<label id="valorParcela" class="error" for="required">Informe o valor da parcela.</label>
+                      				</div>
+                      				<div class="col-md-3">
+                      					<div class="alert alert-primary text-center">
+                      						<h3><span id="valorServico"></span></h3>
+                      					</div>
+                      				</div>
+                      			</div>
+                      			<hr>
+                      			
+                      			
+                      			<h4>Financiamento objeto do Contrato</h4>
+                      			<hr>
+                      			
+                      			<div class="row">
+                      				<div class="col-md-9">
+		                      			<h5>Titular do Financiamento</h5>
+                      				</div>
+                      				<div class="col-md-2">
+									    <select class="form-control" id="tipoTitular">
+									      	<option value="titular">Titular Contrato</option>
+									      	<option value="outraPessoa">Outra Pessoa</option>
+										</select>
+                      				</div>
+                      			</div>
+                      			
+                      			<th:block th:if="${contrato.id} == null">
+                      				nulo porra
+                      			</th:block>
+                      			
+                      			<th:block th:if="${contrato.id} != null">
+                      				<span class="text-success" id="mostraTitular"></span><br>
+                      				<th:block th:if="${contrato.titularFinanciamento.id} == ${contrato.cliente.id}">
+	                      				<input type="hidden" name="titularFinanciamento.id" th:value="${cliente.id}">
+                      				</th:block>
+                      			</th:block>
+                      			
+                    			
+                      			
+                      			<div id="outroTitular" class="outro">
+	                      			<div th:object="${contrato.titularFinanciamento}">
+		                      			<div class="row">
+		                      				<div class="col-md-9">
+		                      				    <div class="form-group">
+				                              		<label for="nome">Nome</label>
+				                                   	<input type="text" id="titularFinanciamento.nome" name="nome" gurugo:classforerror="nome" 
+				                                   		required="true" class="form-control" th:field="*{nome}">
+				                                   	<label id="titularFinanciamento.nome" class="error" for="required">Informe o nome completo.</label>
+				                                   	<input type="hidden" id="titularFinanciamentoId" name="titularFinanciamento.id" th:value="${contrato.titularFinanciamento.id}">
+				                              	</div>
+		                      				</div>
+			                      			<div class="col-md-3">
+			                      				<div class="form-group">
+				                              		<label for="dataNascimento">Data Nascimento</label>
+				                                   	<input type="date" id="dataNascimento" name="dataNascimento" gurugo:classforerror="dataNascimento" 
+				                                   		required="true" class="form-control" th:field="*{dataNascimento}">
+				                                   	<label id="dataNascimento" class="error" for="required">Informe a data de nascimento .</label>
+				                              	</div>
+			                      			</div>
+		                      			</div>
+		                      			<div class="row">
+		                      				<div class="col-md-3">
+		                      				    <div class="form-group">
+				                              		<label for="cpf">CPF</label>
+				                                   	<input type="text" id="cpf" name="cpf" placeholder=""  gurugo:classforerror="cpf" class="form-control js-cpf" 
+				                                   		required="true" th:field="*{cpf}">
+				                                   	<label id="cpf" class="error" for="required">Informe o CPF.</label>
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-3">
+		                      					<div class="form-group">
+				                              		<label for="rg">RG</label>
+				                                   	<input type="text" id="rg" name="rg"  gurugo:classforerror="rg"class="form-control js-rg" th:field="*{rg}"
+				                                   		required="true">
+				                                   	<label id="rg" class="error" for="required">Informe o RG.</label>
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-3">
+		                      				    <div class="form-group">
+				                              		<label for="orgaoExpedidor">Órgao Expedidor</label>
+				                                   	<input type="text" id="orgaoExpedidor" name="orgaoExpedidor" gurugo:classforerror="orgaoExpedidor" 
+				                                   		required="true" placeholder="" class="form-control" th:field="*{orgaoExpedidor}">
+				                                   	<label id="orgaoExpedidor" class="error" for="required">Informe o órgão expedidor.</label>
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-3">
+					                        	<div class="form-group">
+											    	<label for="sexo">Sexo</label>
+												    <select class="form-control" id="sexo" th:field="*{sexo}" required="true" gurugo:classforerror="sexo" >
+												      	<option value="">Selecione o Sexo</option>
+												      	<option value="Masculino">Masculino</option>
+												      	<option value="Feminino">Feminino</option>
+												    </select>
+												    <label id="sexo" class="error" for="required">Informe o sexo.</label>
+											  	</div>
+		                      				</div>
+		                      			</div>
+		                      			<div class="row">
+		                      				<div class="col-md-3">
+		                      				    <div class="form-group">
+											    	<label for="estadoCivil">Estado Civil</label>
+												    <select class="form-control" id="estadoCivil" th:field="*{estadoCivil}" gurugo:classforerror="estadoCivil" 
+												    	required="true">
+												      	<option value="">Selecione o Estado Civil</option>
+												      	<option value="Solteiro">Solteiro(a)</option>
+												      	<option value="Casado">Casado(a)</option>
+												      	<option value="Separado">Separado(a)</option>
+												      	<option value="Divorciado">Divorciado(a)</option>
+												      	<option value="União Estável">União Estável</option>
+												    </select>
+												    <label id="estadoCivil" class="error" for="required">Informe o estado civil.</label>
+											  	</div>
+		                      				</div>
+		                      				<div class="col-md-3">
+		                      					<div th:object="${contrato.titularFinanciamento.telefoneCelular}">
+			                      					<div class="form-group">
+					                              		<label for="telefoneCelular">Telefone Celular</label>
+					                                   	<input type="text" id="titFinTelCelnumero" name="numero" gurugo:classforerror="numero" class="form-control js-phone-number" th:field="*{numero}">
+					                              	</div>
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-6">
+		                      				    <div class="form-group">
+				                              		<label for="email">Email</label>
+				                                   	<input type="email" id="email" name="email" gurugo:classforerror="email" placeholder="" class="form-control" 
+				                                   		required="true" th:field="*{email}">
+				                              	</div>
+				                              	<label id="email" class="error" for="required">Informe o email.</label>
+		                      				</div>
+		                      			</div>
+		                      			<hr>
+		                      			<h5>Endereço do Titular do Financiamento</h5>
+		                      			<div th:object="${contrato.titularFinanciamento.endereco}">
+		                      				<div class="row">
+			                      				<div class="col-md-3">
+			                      				    <div class="form-group" style="color: blue">
+					                              		<label for="profissao">CEP</label>
+					                                   	<input type="text" id="cep" name="cep" gurugo:classforerror="cep" placeholder="" class="form-control js-cep" 
+					                                   		required="true" th:field="*{cep}">
+					                                   	<label id="cep" class="error" for="required">Informe o CEP.</label>
+					                              	</div>
+			                      				</div>
+			                      				<div class="col-md-7">
+			                      					<div class="form-group">
+					                              		<label for="sexo">Logradouro</label>
+					                                   	<input type="text" id="logradouro" name="logradouro" gurugo:classforerror="logradouro" class="form-control" 
+					                                   		required="true" th:field="*{logradouro}">
+					                                   	<label id="logradouro" class="error" for="required">Informe o logradouro.</label>
+					                              	</div>
+			                      				</div>
+			                      				<div class="col-md-2">
+			                      				    <div class="form-group">
+					                              		<label for="numero">Número</label>
+					                                   	<input type="text" id="endnumero" name="numero" gurugo:classforerror="numero" placeholder="" 
+					                                   		class="form-control" th:field="*{numero}">
+					                              	</div>
+			                      				</div>		
+			                      			</div>
+			                      			<div class="row">
+			                      				<div class="col-md-4">
+			                      				    <div class="form-group" style="color: blue">
+					                              		<label for="profissao">Bairro</label>
+					                                   	<input type="text" id="bairro" name="bairro" gurugo:classforerror="bairro" placeholder="" required="true"
+					                                   		class="form-control" th:field="*{bairro}">
+					                                   	<label id="bairro" class="error" for="required">Informe o bairro.</label>
+					                              	</div>
+			                      				</div>
+			                      				<div class="col-md-5">
+			                      					<div class="form-group">
+					                              		<label for="sexo">Cidade</label>
+					                                   	<input type="text" id="cidade" name="cidade" gurugo:classforerror="cidade" class="form-control" 
+					                                   		required="true" th:field="*{cidade}">
+					                                   	<label id="cidade" class="error" for="required">Informe a cidade.</label>
+					                              	</div>
+			                      				</div>
+			                      				<div class="col-md-3">
+				                              		<div class="form-group">
+												    	<label for="estado">Estado</label>
+													    <select class="form-control" id="estado" th:field="*{estado}" gurugo:classforerror="estado" required="true">
+													      	<option value="">Selecione o Estado</option>
+													      	<option value="ac">Acre</option> 
+															<option value="AL">Alagoas</option> 
+															<option value="AM">Amazonas</option> 
+															<option value="AP">Amapá</option> 
+															<option value="BA">Bahia</option> 
+															<option value="CE">Ceará</option> 
+															<option value="DF">Distrito Federal</option> 
+															<option value="ES">Espírito Santo</option> 
+															<option value="GO">Goiás</option> 
+															<option value="MA">Maranhão</option> 
+															<option value="MT">Mato Grosso</option> 
+															<option value="MS">Mato Grosso do Sul</option> 
+															<option value="MG">Minas Gerais</option> 
+															<option value="PA">Pará</option> 
+															<option value="PB">Paraíba</option> 
+															<option value="PR">Paraná</option> 
+															<option value="PE">Pernambuco</option> 
+															<option value="PI">Piauí</option> 
+															<option value="RJ">Rio de Janeiro</option> 
+															<option value="RN">Rio Grande do Norte</option> 
+															<option value="RO">Rondônia</option> 
+															<option value="RS">Rio Grande do Sul</option> 
+															<option value="RR">Roraima</option> 
+															<option value="SC">Santa Catarina</option> 
+															<option value="SE">Sergipe</option> 
+															<option value="SP">São Paulo</option> 
+															<option value="TO">Tocantins</option> 
+													    </select>
+													    <label id="estado" class="error" for="required">Informe o estado.</label>
+										  			</div>
+			                      				</div>		
+			                      			</div>
+	                      				</div>
+	                      			</div>
+                      			</div>
+                      			<hr>
+	                      		<h5>Financiamento</h5>
+                      			<div th:object="${contrato.divida}">
+	                      			<div class="row">
+	                      				<div class="col-md-6">
+	                      				    <div class="form-group">
+			                              		<label for="financeira">Nome da instituição</label>
+			                                   	<input type="text" id="financeira" name="financeira" gurugo:classforerror="financeira" class="form-control" 
+			                                   		required="true" th:field="*{financeira}">
+			                                   	<label id="financeira" class="error" for="required">Informe o nome da instituição financeira.</label>
+			                              	</div>
+	                      				</div>
+		                      			<div class="col-md-3">
+		                      				<div th:object="${contrato.divida.telefoneFinanceira}">
+		                      				    <div class="form-group">
+				                              		<label for="numero">Telefone</label>
+				                                   	<input type="text" id="telNumero" name="numero" gurugo:classforerror="numero" class="form-control js-phone-number" 
+				                                   		required="true" th:field="*{numero}">
+				                                   	<label id="telNumero" class="error" for="required">Informe o telefone.</label>
+				                              	</div>
+		                      				</div>
+		                      			</div>
+	                      				<div class="col-md-3">
+	                      					<div class="form-group">
+			                              		<label for="valorContrato">Valor do Contrato </label>
+			                                   	<input type="text" id="valorContrato" name="valorContrato" gurugo:classforerror="telefoneFinanceira" 
+			                                   		required="true" class="form-control js-money" th:field="*{valorContrato}">
+			                                   	<label id="valorContrato" class="error" for="required">Informe o valor do contrato.</label>
+			                              	</div>
+	                      				</div>
+	                      			</div>
+	                      			<div class="row">
+	                      				<div class="col-md-2">
+	                      					<div class="form-group">
+			                              		<label for="qtdParcelas">Quantidade Parcelas </label>
+			                                   	<input type="text" id="qtdParcelas" name="qtdParcelas" gurugo:classforerror="qtdParcelas" class="form-control" 
+			                                   		required="true" th:field="*{qtdParcelas}">
+			                                   	<label id="qtdParcelas" class="error" for="required">Informe a quantidade de parcelas.</label>
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-2">
+	                      				    <div class="form-group">
+			                              		<label for="valorParcela">Valor da Parcela</label>
+			                                   	<input type="text" id="valorParcelaContrato" name="valorParcela" gurugo:classforerror="valorParcela" 
+			                                   		required="true" class="form-control js-money" th:field="*{valorParcela}">
+			                                   	<label id="valorParcela" class="error" for="required">Informe o valor da parcela.</label>
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-2">
+	                      				    <div class="form-group">
+			                              		<label for="dataVencimentoParcela">Vencimento da 1ª Parcela</label>
+			                                   	<input type="date" id="dataVencimentoParcela" name="dataVencimentoParcela" gurugo:classforerror="dataVencimentoParcela" 
+			                                   		required="true" class="form-control" th:field="*{dataVencimentoParcela}">
+			                                   	<label id="dataVencimentoParcela" class="error" for="required">Informe o vencimento da 1ª parcela.</label>
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-2">
+	                      					<div class="form-group">
+			                              		<label for="qtdParcelas">QTD Parcelas Pagas</label>
+			                                   	<input type="text" id="qtdParcelasPagas" name="qtdParcelasPagas" gurugo:classforerror="qtdParcelasPagas" class="form-control" 
+			                                   		required="true" th:field="*{qtdParcelasPagas}">
+			                                   	<label id="qtdParcelasPagas" class="error" for="required">Informe a quantidade de parcelas pagas.</label>
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-2">
+	                      					<div class="form-group">
+			                              		<label for="qtdParcelas">QTD Parcelas Atrasadas</label>
+			                                   	<input type="text" id="qtdParcelasAtrasadas" name="qtdParcelasAtrasadas" gurugo:classforerror="qtdParcelasAtrasadas" 
+			                                   		required="true" class="form-control" th:field="*{qtdParcelasAtrasadas}">
+			                                   	<label id="qtdParcelasAtrasadas" class="error" for="required">Informe a quantidade de parcelas atrasadas.</label>
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-2">
+	                      				    <div class="form-group">
+			                              		<label for="dataUltimaParcelaPaga">Última Parcela Paga</label>
+			                                   	<input type="date" id="dataUltimaParcelaPaga" name="dataUltimaParcelaPaga" gurugo:classforerror="dataUltimaParcelaPaga" 
+			                                   		required="true" class="form-control" th:field="*{dataUltimaParcelaPaga}">
+			                                   	<label id="dataUltimaParcelaPaga" class="error" for="required">Informe a data da última parcela paga .</label>
+			                              	</div>
+	                      				</div>
+	                      			</div>
+	                      			<div class="row">
+	                      				<div class="col-md-2">
+	                      					<div class="form-group">
+			                              		<label for="parcelaBalao">Valor Parcela Balão </label>
+			                                   	<input type="text" id="parcelaBalao" name="parcelaBalao" gurugo:classforerror="parcelaBalao" class="form-control js-money" 
+			                                   		required="true" th:field="*{parcelaBalao}">
+			                                   	<label id="parcelaBalao" class="error" for="required">Informe a parcela balão.</label>
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-2">
+	                      				    <div class="form-group">
+			                              		<label for="saldoDevedor">Valor Saldo Devedor</label>
+			                                   	<input type="text" id="saldoDevedor" name="saldoDevedor" gurugo:classforerror="saldoDevedor" class="form-control js-money" 
+			                                   		required="true" th:field="*{saldoDevedor}">
+			                                   	<label id="saldoDevedor" class="error" for="required">Informe o saldo devedor.</label>
+			                              	</div>
+	                      				</div>
+	                      				
+	                      				<div class="col-md-2">
+	                      					<div class="form-group">
+			                              		<label for="descontoPercentual">Desconto Percentual</label>
+			                                   	<select class="form-control" id="descontoPercentual" th:field="*{descontoPercentual}" 
+			                                   		required="true" gurugo:classforerror="descontoPercentual" >
+											      	<option value="">Selecione...</option>
+											      	<option value="10">10 %</option> 
+													<option value="20">20 %</option> 
+													<option value="30">30 %</option> 
+													<option value="40">40 %</option> 
+													<option value="50">50 %</option> 
+													<option value="60">60 %</option> 
+													<option value="70">70 %</option>
+											    </select>
+											    <label id="descontoPercentual" class="error" for="required">Informe o desconto percentual.</label>
+			                              	</div>
+	                      				</div>
+	                      				
+	                      			</div>
+                      			</div>
+                      			<hr>
+	                      		<h5>Objeto do Financiamento</h5>
+	                      			<div class="row">
+	                      				<div class="col-md-3">
+	                      					<div class="form-group">
+			                              		<label for="objeto">Objeto</label>
+			                                   	<select class="form-control" id="objeto" required="true" th:field="*{tipoObjeto}">
+											      	<option value="">Selecione ...</option>
+											      	<option th:each="objeto : ${objetos}" th:value="${objeto}" th:text="${objeto.descricao}">Solteiro(a)</option>
+											    </select>
+											    <label id="objeto" class="error" for="required">Informe o objeto do financiamento.</label>
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-3">
+	                      					
+	                      				</div>
+	                      				<div class="col-md-3">
+	                      				</div>
+	                      				<div class="col-md-3">
+	                      				</div>
+	                      			</div>
+                      			<div id="VEICULO" class="tipo_divida">
+                      				<div th:object="${contrato.veiculoDivida}">
+	                      				<div class="row">
+		                      				<div class="col-md-3">
+		                      					<div class="form-group">
+				                              		<label for="placa">Placa</label>
+				                                   	<input type="text" id="placa" name="placa" gurugo:classforerror="placa" class="form-control" 
+				                                   		th:field="*{placa}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-2">
+		                      				    <div class="form-group">
+				                              		<label for="ufPlaca">UF</label>
+				                                   	<input type="text" id="ufPlaca" name="ufPlaca" gurugo:classforerror="ufPlaca" class="form-control" 
+				                                   		th:field="*{ufPlaca}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-1">
+		                      				</div>
+		                      				<div class="col-md-3">
+		                      				    <div class="form-group">
+				                              		<label for="renavam">Renavam</label>
+				                                   	<input type="text" id="renavam" name="renavam" gurugo:classforerror="renavam" class="form-control" 
+				                                   		th:field="*{renavam}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-1">
+		                      				</div>
+		                      				<div class="col-md-2">
+		                      				    <div class="form-group">
+				                              		<label for="status">Status</label>
+				                                   	<select class="form-control" id="status" th:field="*{status}" gurugo:classforerror="status" >
+												      	<option value="">Selecione...</option>
+												      	<option value="ciculacao">Em Circulação</option> 
+														<option value="busca">Busca e Apreensão</option> 
+														<option value="vedada">Circulação Vedada</option> 
+												    </select>
+				                              	</div>
+		                      				</div>
+		                      			</div>
+		                      			<div class="row">
+		                      				<div class="col-md-5">
+		                      					<div class="form-group">
+				                              		<label for="marcaModelo">Marca/Modelo do Veículo</label>
+				                                   	<input type="text" id="marcaModelo" name="marcaModelo" gurugo:classforerror="marcaModelo" class="form-control" 
+				                                   		th:field="*{marcaModelo}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-3">
+		                      				    <div class="form-group">
+				                              		<label for="cor">Cor</label>
+				                                   	<input type="text" id="cor" name="cor" gurugo:classforerror="cor" class="form-control" th:field="*{cor}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-2">
+		                      				    <div class="form-group">
+				                              		<label for="anoFabricacao">Ano Fabricação</label>
+				                                   	<input type="text" id="anoFabricacao" name="anoFabricacao" gurugo:classforerror="anoFabricacao" 
+				                                   		class="form-control" th:field="*{anoFabricacao}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-2">
+		                      				    <div class="form-group">
+				                              		<label for="anoModelo">Ano Modelo</label>
+				                                   	<input type="text" id="anoModelo" name="anoModelo" gurugo:classforerror="anoModelo" class="form-control" th:field="*{anoModelo}">
+				                              	</div>
+		                      				</div>
+		                      			</div>
+		                      		</div>
+                      			</div>
+                      			<div id="CARTAO" class="tipo_divida">
+                      				<div th:object="${contrato.cartaoDivida}">
+	                      				<div class="row">
+		                      				<div class="col-md-6">
+		                      					<div class="form-group">
+				                              		<label for="nome">Nome</label>
+				                                   	<input type="text" id="nome" name="nome" gurugo:classforerror="nome" class="form-control" th:field="*{nome}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-3">
+		                      					<div class="form-group">
+				                              		<label for="ultimosNumeros">4 Números</label>
+				                                   	<input type="text" id="ultimosNumeros" name="ultimosNumeros" gurugo:classforerror="ultimosNumeros" class="form-control" th:field="*{ultimosNumeros}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-3">
+		                      					<div class="form-group">
+				                              		<label for="bandeira">Bandeira</label>
+				                                   	<input type="text" id="bandeira" name="bandeira" gurugo:classforerror="bandeira" class="form-control" th:field="*{bandeira}">
+				                              	</div>
+		                      				</div>
+		                      			</div>
+		                      		</div>
+                      			</div>
+                      			<div id="EMPRESTIMO" class="tipo_divida">
+                      				<div th:object="${contrato.emprestimoDivida}">
+	                      				<div class="row">
+		                      				<div class="col-md-6">
+		                      					<div class="form-group">
+				                              		<label for="nomeInstituicao">Nome Instituição</label>
+				                                   	<input type="text" id="nomeInstituicao" name="nomeInstituicao" gurugo:classforerror="nomeInstituicao" class="form-control" th:field="*{nomeInstituicao}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-3">
+		                      				    <div class="form-group">
+				                              		<label for="agencia">Agência</label>
+				                                   	<input type="text" id="agencia" name="agencia" gurugo:classforerror="agencia" class="form-control" th:field="*{agencia}">
+				                              	</div>
+		                      				</div>
+		                      				<div class="col-md-3">
+		                      				    <div class="form-group">
+				                              		<label for="contaCorrente">Conta Corrente</label>
+				                                   	<input type="text" id="contaCorrente" name="contaCorrente" gurugo:classforerror="contaCorrente" class="form-control" th:field="*{contaCorrente}">
+				                              	</div>
+		                      				</div>
+		                      			</div>
+		                      		</div>
+                      			</div>
+                      			
+                      			
+                      			
+                      			<hr class="my-4">
+                      			<div class="card-footer text-right">
+                      				<a th:href="@{/contrato}" class="btn btn-fill btn-warning">Cancelar</a>
+		                          	<button type="submit" class="btn btn-fill btn-info">Gravar</button>
+		                    	</div>
+                         	</form>
+                    	</div>
+               		</div>
+            	</div>
+    		</div>
+ 		</div>
+ 	</div>
+</section>
+<section layout:fragment="javascript-extra">
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			if ($('#titularFinanciamentoId') != $('#cliente')) {
+			    $('.outro').show();
+			    $("#tipoTitular").val('outraPessoa');
+			}
+			
+			if ($('#titularFinanciamentoId') == $('#cliente')) {
+			    $('.outro').hide();
+			}
+			
+		    $('.tipo_divida').hide();
+		    if (($("#objeto")[0].value) != '') {
+		    	$('#' + $("#objeto")[0].value).show();
+		    };
+		    var qtd = $("#qtdParcelasPagamento").val();
+			var valor = (($("#valorParcela").val()).replace(',','.'));
+			var total = parseFloat(qtd) * valor;
+			if (qtd == '' || valor == '') {
+				total = 0;
+			}
+			$("#valorServico").text(total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+		});
+		$("#tipoTitular").on('change', function(){
+			if ($("#tipoTitular").val() == 'outraPessoa') {
+			    $('.outro').show();
+			    $("#mostraTitular").text("");
+			    //colocar o id do form
+			} else {
+				$('.outro').hide();
+				$("#mostraTitular").text($('#nomeCliente').text());
+				//colocar o id do titular
+			}
+		});
+	
+		$("#objeto").on('change', function(){
+		    $('.tipo_divida').hide();
+		    $('#' + this.value).show();
+		});
+		
+		$("#qtdParcelasPagamento").on('change', function() {
+			var qtd = $("#qtdParcelasPagamento").val();
+			var valor = (($("#valorParcela").val()).replace(',','.'));
+			var total = parseFloat(qtd) * valor;
+			if (qtd == '' || valor == '') {
+				total = 0;
+			}
+			$("#valorServico").text(total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+
+		});
+		$("#valorParcela").on('change', function() {
+			var qtd = $("#qtdParcelasPagamento").val();
+			var valor = (($("#valorParcela").val()).replace(',','.'));
+			var total = parseFloat(qtd) * valor;
+			$("#valorServico").text(total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+
+		})
+
+	</script>
+
+	
+</section>
+
+</html>

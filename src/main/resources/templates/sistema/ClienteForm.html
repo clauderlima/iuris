@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{layout/layout}"
+	xmlns:gurugo="http://gurugo.net">
+
+
+<section layout:fragment="conteudo">
+	<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol class="breadcrumb float-xl-right">
+				<li class="breadcrumb-item"><a href="javascript:;">Início</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Cadastro</a></li>
+				<li class="breadcrumb-item active">Cliente</li>
+			</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">Cliente <small>cadastro no sistema</small></h1>
+			<!-- end page-header -->
+			<!-- begin panel -->
+			<div class="panel panel-inverse" data-sortable-id="form-stuff-10">
+				<!-- begin panel-heading -->
+				<div class="panel-heading">
+					<h4 class="panel-title">Formulário</h4>
+						<div class="panel-heading-btn">
+							<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+							<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+							<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+						</div>
+					</div>
+					<!-- end panel-heading -->
+					<!-- begin panel-body -->
+					<div class="panel-body">
+						<form method="POST" th:object="${cliente}" th:action="${cliente.novo} ? @{/cliente/salvar} : @{/cliente/{id}(id=${cliente.id})}">
+         				<gurugo:message/>
+						<input type="hidden" th:field="*{id}">
+                      	<input type="hidden" name="tipoPessoa" id="tipoPessoa" value="cliente">
+                      	<div class="row">
+                      		<div class="col-md-9">
+                      			<div class="form-group formField">
+		                        	<label for="nome">Nome</label>
+		                            <input type="text" id="nome" name="nome" gurugo:classforerror="nome" placeholder="Nome Completo" class="form-control" 
+		                            	 th:field="*{nome}">
+		                            <div class="valid-feedback">Informe o nome completo do cliente.</div>
+		                            <div class="valid-tooltip">Looks good!</div>
+		                      	</div>
+                      		</div>
+                      		<div class="col-md-3">
+                      		    <div class="form-group formField">
+		                       		<label for="dataNascimento">Data Nascimento</label>
+		                           	<input type="date" id="dataNascimento" name="dataNascimento" gurugo:classforerror="dataNascimento" class="form-control" th:field="*{dataNascimento}">
+		                           	<div class="valid-feedback">A data de nascimento é obrigatória!</div>
+									<div class="valid-tooltip">Looks good!</div>
+		                       	</div>
+                      		</div>
+                      	</div>
+                      			<div class="row">
+                      				<div class="col-md-3">
+                      				    <div class="form-group formField">
+		                              		<label for="cpf">CPF</label>
+		                                   	<input type="text" id="cpf" name="cpf" placeholder=""  gurugo:classforerror="cpf" class="form-control js-cpf" th:field="*{cpf}">
+		                                 
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-3">
+                      					<div class="form-group formField">
+		                              		<label for="required">RG</label>
+		                                   	<input type="text" id="rg" name="rg"  gurugo:classforerror="rg"class="form-control js-rg" th:field="*{rg}">
+		                                   	
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-3">
+                      				    <div class="form-group formField">
+		                              		<label for="orgaoExpedidor">Órgao Expedidor</label>
+		                                   	<input type="text" id="orgaoExpedidor" name="orgaoExpedidor" gurugo:classforerror="orgaoExpedidor" class="form-control" th:field="*{orgaoExpedidor}">
+		                                  
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-3">
+			                        	<div class="form-group formField">
+									    	<label for="sexo">Sexo</label>
+										    <select class="form-control" id="sexo" th:field="*{sexo}" gurugo:classforerror="sexo">
+										      	<option value="">Selecione o Sexo</option>
+										      	<option value="Masculino">Masculino</option>
+										      	<option value="Feminino">Feminino</option>
+										    </select>
+									  	</div>
+                      				</div>
+                      				
+                      			</div>
+                      			<div class="row">
+                      				
+                      				<div class="col-md-3">
+                      				    <div class="form-group formField">
+									    	<label for="estadoCivil">Estado Civil</label>
+										    <select class="form-control" id="estadoCivil" th:field="*{estadoCivil}" gurugo:classforerror="estadoCivil">
+										      	<option value="Solteiro">Solteiro(a)</option>
+										      	<option value="Casado">Casado(a)</option>
+										      	<option value="Separado">Separado(a)</option>
+										      	<option value="Divorciado">Divorciado(a)</option>
+										      	<option value="União Estável">União Estável</option>
+										    </select>
+									  	</div>
+                      				</div>
+                      				<div class="col-md-2">
+ 
+                      				</div>
+                      				<div class="col-md-3">
+                      				    <div class="form-group formField">
+		                              		<label for="nacionalidade">Nacionalidade</label>
+		                                   	<input type="text" id="nacionalidade" name="nacionalidade" gurugo:classforerror="nacionalidade" placeholder="" class="form-control" th:field="*{nacionalidade}">
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-4">
+                      				    <div class="form-group formField">
+		                              		<label for="profissao">Profissão</label>
+		                                   	<input type="text" id="profissao" name="profissao" gurugo:classforerror="profissao" placeholder="" class="form-control" th:field="*{profissao}">
+		                              	</div>
+                      				</div>		
+                      			</div>
+                      			<hr class="my-4">
+                      			<div class="row">
+                      				<div class="col-md-3">
+                      					<div th:object="${cliente.telefoneCelular}">
+	                      					<div class="form-group formField">
+			                              		<label for="telefoneCelular">Telefone Celular</label>
+			                                   	<input type="text" id="numeroCelular" name="numero" gurugo:classforerror="numero" class="form-control js-phone-number" th:field="*{numero}">
+			                              	</div>
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-3">
+                      					<div th:object="${cliente.telefoneFixo}">
+	                      				    <div class="form-group formField">
+			                              		<label for="telefoneFixo">Telefone Fixo</label>
+			                                   	<input type="text" id="numeroFixo" name="numero" gurugo:classforerror="numero" placeholder="" class="form-control js-phone-number" th:field="*{numero}">
+			                              	</div>
+			                         	</div>
+                      				</div>
+                      				<div class="col-md-6">
+                      				    <div class="form-group formField">
+		                              		<label for="email">Email</label>
+		                                   	<input type="email" id="email" name="email" gurugo:classforerror="email" class="form-control" 
+		                                   		th:field="*{email}">
+		                              	</div>
+                      				</div>
+                      			</div>
+                      			<hr class="my-4">
+                      			<div th:object="${cliente.endereco}">
+                      				<div class="row">
+	                      				<div class="col-md-3">
+	                      				    <div class="form-group formField">
+			                              		<label for="profissao">CEP</label>
+			                                   	<input type="text" id="cep" name="cep" gurugo:classforerror="cep" placeholder="" class="form-control js-cep" th:field="*{cep}">
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-7">
+	                      					<div class="form-group formField">
+			                              		<label for="sexo">Logradouro</label>
+			                                   	<input type="text" id="logradouro" name="logradouro" gurugo:classforerror="logradouro" class="form-control" th:field="*{logradouro}">
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-2">
+	                      				    <div class="form-group formField">
+			                              		<label for="numero">Número</label>
+			                                   	<input type="text" id="numero" name="numero" gurugo:classforerror="numero" placeholder="" class="form-control" th:field="*{numero}">
+			                              	</div>
+	                      				</div>		
+	                      			</div>
+	                      			<div class="row">
+	                      				<div class="col-md-4">
+	                      				    <div class="form-group formField">
+			                              		<label for="profissao">Bairro</label>
+			                                   	<input type="text" id="bairro" name="bairro" gurugo:classforerror="bairro" placeholder="" class="form-control" th:field="*{bairro}">
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-5">
+	                      					<div class="form-group formField">
+			                              		<label for="sexo">Cidade</label>
+			                                   	<input type="text" id="cidade" name="cidade" gurugo:classforerror="cidade" class="form-control" th:field="*{cidade}">
+			                              	</div>
+	                      				</div>
+	                      				<div class="col-md-3">
+		                              		<div class="form-group formField">
+										    	<label for="estado">Estado</label>
+											    <select class="form-control" id="estado" th:field="*{estado}" gurugo:classforerror="estado" >
+											      	<option value="">Selecione o Estado</option>
+											      	<option value="ac">Acre</option> 
+													<option value="AL">Alagoas</option> 
+													<option value="AM">Amazonas</option> 
+													<option value="AP">Amapá</option> 
+													<option value="BA">Bahia</option> 
+													<option value="CE">Ceará</option> 
+													<option value="DF">Distrito Federal</option> 
+													<option value="ES">Espírito Santo</option> 
+													<option value="GO">Goiás</option> 
+													<option value="MA">Maranhão</option> 
+													<option value="MT">Mato Grosso</option> 
+													<option value="MS">Mato Grosso do Sul</option> 
+													<option value="MG">Minas Gerais</option> 
+													<option value="PA">Pará</option> 
+													<option value="PB">Paraíba</option> 
+													<option value="PR">Paraná</option> 
+													<option value="PE">Pernambuco</option> 
+													<option value="PI">Piauí</option> 
+													<option value="RJ">Rio de Janeiro</option> 
+													<option value="RN">Rio Grande do Norte</option> 
+													<option value="RO">Rondônia</option> 
+													<option value="RS">Rio Grande do Sul</option> 
+													<option value="RR">Roraima</option> 
+													<option value="SC">Santa Catarina</option> 
+													<option value="SE">Sergipe</option> 
+													<option value="SP">São Paulo</option> 
+													<option value="TO">Tocantins</option> 
+											    </select>
+								  			</div>
+	                      				</div>		
+	                      			</div>
+                      			</div>
+                      			<hr class="my-4">
+                      			<div class="form-group formField text-right">
+                      				<a th:href="@{/cliente}" class="btn btn-secondary">Cancelar</a>
+		                          	<button type="submit" class="btn btn-primary m-r-5">Gravar</button>
+								</div>
+                      			
+                         	</form>
+						
+						</div>
+						<!-- end panel-body -->
+					</div>
+			<!-- end row -->
+			<!-- end panel -->
+		</div>
+		<!-- end #content -->
+	</section>
+<section layout:fragment="javascript-extra">
+	<script th:src="@{/vendors/js/jquery.validate.min.js}"></script>
+</section>
+
+</html>

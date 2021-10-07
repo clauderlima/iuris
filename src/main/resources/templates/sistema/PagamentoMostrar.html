@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout-padrao">
+
+<section layout:fragment="conteudo">
+	<div class="content">
+    	<div class="container-fluid">
+        	<div class="row">
+            	<div class="col-md-12 ml-auto mr-auto">
+                 	<div class="card">
+                     	<div class="card-header">
+                         	<div class="row">
+                         		<div class="col-md-10">
+                     				<h4 class="card-title">Controle de Pagamentos</h4>
+                     			</div>
+                         	</div>
+                     	</div>
+                     <div class="card-body">
+                  		<div class="row">
+                  			<div class="col-md-4">
+                  				<div class="label">Nome:</div>
+                  				<span th:text="${cliente.nome}"></span>
+                  			</div>
+                  			<div class="col-md-2">
+                  				<div class="label">Telefone:</div>
+                  				<span th:text="${cliente.telefoneCelular.numero}"></span>
+                  			</div>
+                  			<div class="col-md-2">
+                  				<div class="label">Contrato:</div>
+                  				<span th:text="${cliente.contrato.numero}"></span>
+                  			</div>
+                  			<div class="col-md-2">
+                  				<div class="label">Data:</div>
+                  				<span th:text="${#temporals.format(cliente.contrato.dataAssinatura, 'dd/MM/yyyy')}"></span>
+                  			</div>
+                  			<div class="col-md-2">
+                  				<div class="label">Status:</div>
+                  				<span>Vigente</span>
+                  			</div>
+                  		</div>
+		                            
+		          		<hr class="risco">
+		     			<div class="row">
+		                	<div class="col-md-2">
+		                 		<div class="label">Forma de Pagamento:</div>
+		                       	<span th:text="${cliente.contrato?.tipoPagamento} ? ${cliente.contrato.tipoPagamento.descricao} : ''"></span>
+		                    </div>
+                           	<div class="col-md-2">
+                           		<div class="label">QTD Parcelas:</div>
+                           		<span th:text="${cliente.contrato?.qtdParcelasPagamento}"></span>
+                           	</div>
+                           	<div class="col-md-4">
+                           		<div class="label">Valor da Parcela:</div>
+                           		<span th:text="${#numbers.formatCurrency(cliente.contrato?.valorParcela)}"></span>
+                           	</div>
+                           	<div class="col-md-4">
+                           		<div class="label">Total:</div>
+                           		<span th:text="${#numbers.formatCurrency(cliente.contrato?.valorContrato)}"></span>
+                           	</div>
+		             	</div>
+	               	</div>
+	          	</div>
+		      	<div class="card">
+                   	<div class="row">
+                      	<div class="col-md-12">
+                   			<div class="card card-plain">
+                   				<div class="card-header text-right">
+                   					<a th:href="@{/parcela/gerar/{id}(id = ${cliente.id})}" class="btn btn-wd btn-primary">Gerar Parcelas</a>
+                   				</div>
+                    			<div class="table-responsive ">
+                       				<table class="table table-hover table-striped">
+	                                    <thead>
+	                                        <tr>
+	                                        	<th>#</th>
+	                                    		<th>Parcela</th>
+	                                    		<th>Data Vencimento</th>
+	                                    		<th>Valor</th>
+	                                    		<th>Data Pagamento</th>
+	                                    		<th>Valor Pagamento</th>
+	                                    		<th>Status</th>
+	                                    		<th>Opções</th>
+	                                		</tr>
+	                                	</thead>
+                           				<tbody>
+                               				<tr th:each="parcela, numero: ${cliente.contrato?.parcelas}">
+                               					<td th:text="${numero.count}">1</td>
+                               					<td> 1/<span th:text="${parcela.parcela}"></span></td>
+                               					<td th:text="${#temporals.format(parcela.dataVencimento, 'dd/MM/yyyy')}">10/12/2019</td>
+                               					<td th:text="${#numbers.formatCurrency(parcela.valor)}">R$450,00</td>
+                               					<td th:text="${parcela.dataPagamento} ? ${#temporals.format(parcela.dataPagamento?, 'dd/MM/yyyy')} : ''">10/12/2019</td>
+                               					<td th:text="${parcela.valorPagamento} ? ${#numbers.formatCurrency(parcela.valorPagamento)} : ''">R$450,00</td>
+                               					<td th:text="${parcela.status.descricao}">Paga</td>
+                               					<td>
+                               						<a th:href="@{/parcela/editar/{id}(id=${parcela.id})}" rel="tooltip" data-original-title="Editar">
+                                						<i class="fa fa-edit"></i>
+                               						</a>&nbsp;
+                               						<a th:href="@{/boleto/{id}(id=${parcela.id})}" class="btn btn-success btn-link btn-xs" rel="tooltip" 
+                               							target="_blank" data-original-title="Imprimir Boleto">
+                                						<i class="fa fa-print"></i>
+                               						</a>
+                               						<a th:href="@{/parcela/remover/{id}(id=${parcela.id})}" class="btn btn-danger btn-link btn-xs"
+                               							rel="tooltip" data-original-title="Excluir">
+                                						<i class="fa fa-times"></i>
+                               						</a>
+                               					</td>
+                               				</tr>
+                           				</tbody>
+                            		</table>
+                        		</div>
+                   			</div>
+                        </div>
+	            	</div>
+	          	</div><!-- end tab card -->
+        		</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	
+	<div class="modal fade" id="modalCadastroRapidoPagamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLongTitle">Edição de Parcela</h5>
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          				<span aria-hidden="true">&times;</span>
+        			</button>
+      			</div>
+	       		<form class="form-horizontal" method="POST" th:action="@{/parcela/editar}">
+      				<div class="modal-body">
+      					<div class="alert alert-danger d-none js-mensagem-cadastro-rapido-titulo" role="alert"></div>
+		       			<div class="row">
+		       				<div class="col-md-5">
+				       			<div class="form-group">
+		                      		<label for="titulo">Parcela</label>
+		                           	<input type="text" id="parcela" name="nomeTitulo" class="form-control" >
+		                      	</div>
+		       				</div>
+		       				<div class="col-md-7">
+				       			<div class="form-group">
+		                      		<label for="titulo">Vencimento</label>
+		                           	<input type="date" id="parcela" name="parcela" class="form-control" >
+		                      	</div>
+		       				</div>
+		       			</div>
+		       			<div class="row">
+		       				<div class="col-md-6">
+		                      	<div class="form-group">
+		                      		<label for="titulo">Valor</label>
+		                           	<input type="text" id="valor" name="valor" class="form-control" >
+		                      	</div>
+		       				</div>
+		       				<div class="col-md-6">
+		                      	<div class="form-group">
+		                      		<label for="titulo">Status</label>
+		                           	<input type="text" id="status" name="status" class="form-control" >
+		                      	</div>
+		       				</div>
+		       			</div>
+		      		</div>
+	      			<div class="modal-footer">
+	        			<button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+	        			<button id="btn-salvar" type="button" class="btn btn-success js-modal-cadastro-titulo-salvar-btn">Gravar</button>
+	      			</div>
+		       	</form>
+    		</div>
+  		</div>
+	</div>
+</section>
+<section layout:fragment="javascript-extra">
+	<script th:src="@{/js/lancar-informacao-historico.js}"></script>
+	
+	<script th:src="@{/js/pagamento.cadastro-rapido.js}"></script>
+</section>
+
+</html>

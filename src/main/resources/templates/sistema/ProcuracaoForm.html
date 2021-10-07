@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	xmlns:gurugo="http://gurugo.net">
+	
+	<head>
+		<link th:href="@{/assets/plugins/select2/dist/css/select2.min.css}" rel="stylesheet" />
+	</head>
+
+<section layout:fragment="conteudo">
+	<div id="content" class="content">
+		<!-- begin breadcrumb -->
+		<ol class="breadcrumb float-xl-right">
+			<li class="breadcrumb-item"><a th:href="@{/}">Início</a></li>
+			<li class="breadcrumb-item"><a href="javascript:;">Procuração</a></li>
+			<li class="breadcrumb-item active">Nova</li>
+		</ol>
+		<!-- end breadcrumb -->
+		<!-- begin page-header -->
+		<h1 class="page-header">
+			<span th:if="${procuracao.novo}">Cadastrar Procuração</span>
+            <span th:unless="${procuracao.novo}">Edição de Procuração</span>
+		</h1>
+			<!-- end page-header -->
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<h4 class="panel-title">Inclusão de procuração no sistema</h4>
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+					</div>
+				</div>
+				<div class="panel-body">
+					<form method="POST" th:object="${procuracao}" th:action="${procuracao.novo} ? @{/procuracao} : @{/procuracao/{id}(id=${procuracao.id})}">
+         				<gurugo:message/>
+						<input type="hidden" name="outorgante" th:value="${cliente.id}">
+                      	<input type="hidden" th:field="*{id}">
+                      	<div th:object="${cliente}">
+                      		<input type="hidden" id="cliente" name="cliente" th:value="*{id}">
+                      	</div>
+                      	<div class="row">
+                   			<div class="col-md-6">
+                      			<b>Outorgante: </b><span id="nomeCliente" th:text="${cliente.nome}"></span>
+                      			<input type="hidden" id="cliente.id" th:value="${cliente.id}">
+                      		</div>
+                      		<div class="col-md-3">
+                      			<b>CPF: </b><span th:text="${cliente.cpf}"></span>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<b>Telefone: </b><span th:text="${cliente.telefoneCelular.numero}"></span>
+                      		</div>
+                      	</div>
+                      	<hr>
+                      	<div class="row">
+                      		<div class="col-md-2">
+                      			<div class="form-group">
+		                       		<label for="consultor">Escritório</label>
+		                       		<select class="form-control" id="consultor" th:field="*{escritorio}">
+										<option value="">Selecione ...</option>
+										<option th:each="escritorio : ${escritorios}" th:value="${escritorio.id}" th:text="${escritorio.nome}">Solteiro(a)</option>
+									</select>
+		                     	</div>
+                      		</div>
+                      		<div class="col-md-10">
+                      			<div class="form-group">
+									<label for="outorgados">Outorgados</label>
+										<select class="multiple-select2 form-control" multiple="multiple" th:field="*{outorgados}">
+										    <option th:each="advogado : ${advogados}" th:value="${advogado.id}" th:text="${advogado.nome}">Solteiro(a)</option>	
+										</select>
+							
+								</div>
+                      		</div>
+                      	</div>
+                      	<div class="row">
+          					<div class="col-md-12">
+          						<div class="form-group">
+                    				<label for="consultor">Poder Geral:</label>
+                    				<div class="card">
+                    					<div class="p-15">
+	                    					<b>PODERES:</b> <span  th:text="${poderGeral[0].descricao}"></span>
+                    					</div>
+                    				</div>
+                    			</div>
+          					</div>
+              			</div>
+              			<div class="row">
+          					<div class="col-md-12">
+          						<div class="form-group">
+                    				<label for="consultor">Poderes Especiais</label>
+                    				<div class="card">
+                    					<div class="p-15">
+	                    					<div class="form-group">
+						         				<div class="row m-l-3">
+						         					<th:block th:each="item : ${poderesEspeciais}">
+						         						<div class="col-md-4">
+							                     			<label class="checkbox checkbox-inline">
+							                     				<input type="checkbox" th:value="${item.id}" th:field="*{poderes}">
+							                     				<span th:text="${item.descricao}"></span>
+							                     			</label>
+						          						</div>
+						         					</th:block>
+						         				</div>
+				          					</div>
+                    					</div>
+                    				</div>
+                    			</div>
+          					</div>
+              			</div>
+              			<div class="row">
+          					<div class="col-md-10">
+          					</div>
+          					<div class="col-md-2">
+	                      		<div class="form-group">
+			                    	<label for="data">Data Contrato</label>
+			                        <input type="date" id="data" name="data" gurugo:classforerror="data" 
+			                           		class="form-control datepicker" th:field="*{data}">
+			                  	</div>
+	                      	</div>
+              			</div>
+              			
+                      			<div class="card-footer text-right">
+                      				<a th:href="@{/procuracao}" class="btn btn-fill btn-warning">Cancelar</a>
+		                          	<button type="submit" class="btn btn-fill btn-info">Gravar</button>
+		                    	</div>
+                         	</form>
+				</div>
+			</div>
+			<!-- end panel -->
+		</div>
+		<!-- end #content -->
+	
+</section>
+<section layout:fragment="javascript-extra">
+	<script th:src="@{/assets/plugins/select2/dist/js/select2.min.js}"></script>
+	<script type="text/javascript">
+			$(".multiple-select2").select2({ placeholder: "Seleciones os advogados" });
+	</script>
+</section>
+
+</html>

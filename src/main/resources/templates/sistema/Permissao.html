@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	xmlns:gurugo="http://gurugo.net">
+	
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+	
+</head>
+
+<section layout:fragment="conteudo">
+	<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol class="breadcrumb float-xl-right">
+				<li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Page Options</a></li>
+				<li class="breadcrumb-item active">Blank Page</li>
+			</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">Permissões <small>cadastradas no sistema</small></h1>
+			<!-- end page-header -->
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<h4 class="panel-title">Relação das Permissões</h4>
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+					</div>
+				</div>
+				<div class="panel-body">
+                    <form method="POST" th:object="${permissao}" th:action="@{/gerencia/permissao/salvar}">
+						<div class="card stacked-form">
+         					<div class="card-body ">
+         						<gurugo:message/>
+                      			<input type="hidden" th:field="*{id}">
+                      			<div class="row">
+                      				<div class="col-md-10">
+                      					<div class="form-group">
+		                              		<label for="nome">Nome</label>
+		                                   	<input type="text" id="nomePermissao" name="nomePermissao" gurugo:classforerror="nomePermissao" class="form-control" th:field="*{nomePermissao}">
+		                              	</div>
+                      				</div>
+                      				<div class="col-md-2">
+                      					<div class="p-t-25"></div>
+		                       			<button type="submit" class="btn btn-fill btn-info p-t-5">Gravar</button>
+                      					<a th:href="@{/gerencia/permissao}" class="btn btn-fill btn-warning m-l-20">Cancelar</a>
+		                    	</div>
+                      			</div><hr>
+                      			<table id="tabela" class="table table-striped table-bordered table-td-valign-middle">
+								<thead>
+     								<tr role="row">
+                						<th class="text-center">#</th>
+                						<th>Nome</th>
+                  						<th class="text-center">Ações</th>
+       								</tr>
+           						</thead>
+         						<tbody>
+                                	<tr th:each="item, num : ${permissoes}">
+                                		<td class="text-center" th:text="${num.count}"></td>
+                                   		<td th:text="${item.nomePermissao}">Airi Satou</td>
+                                    	<td class="text-center">
+                                        	<a th:href="@{/gerencia/permissao/{id}(id = ${item.id})}" class="btn btn-link btn-warning edit"  rel="tooltip" data-original-title="Editar Dados"><i class="fa fa-edit"></i></a>
+                                        	<!-- <a href="#" class="btn btn-link btn-danger remove"><i class="fa fa-times"></i></a> -->
+                                    	</td>
+                               		</tr>
+             					</tbody>
+                  			</table>
+                    		</div>
+                      		
+               			</div><br>
+                  	</form>
+               		
+				</div>
+			</div>
+			<!-- end panel -->
+		</div>
+		<!-- end #content -->
+	
+</section>
+<section layout:fragment="javascript-extra">
+	<script th:src="@{/assets/plugins/datatables.net/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
+	<script th:src="@{/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	<script th:src="@{/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js}"></script>
+	<script th:src="@{/assets/js/demo/table-manage-default.demo.js}"></script>
+	
+	<script type="text/javascript">
+   
+		$('#tabela').DataTable( {
+			buttons: [
+					'pdf',
+					'print'
+			],
+			responsive: true,
+		    language: {
+		        search:         "Pesquisar&nbsp;:",
+		        lengthMenu:    	"Mostrar _MENU_",
+		        info:           "Mostrando do _START_ ao _END_ de um total de _TOTAL_ permissões",
+		        emptyTable: 	"Essa tabela não possui dados",
+		        paginate: {
+		            first:      "Primeiro",
+		            previous:   "Anterior",
+		            next:       "Próximo",
+		            last:       "Último"
+		        },
+		    }
+		} );
+	</script>
+
+</section>
+
+</html>

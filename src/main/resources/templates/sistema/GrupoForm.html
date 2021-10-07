@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	xmlns:gurugo="http://gurugo.net">
+	
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+	
+</head>
+
+<section layout:fragment="conteudo">
+	<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol class="breadcrumb float-xl-right">
+				<li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+				<li class="breadcrumb-item"><a href="javascript:;">Page Options</a></li>
+				<li class="breadcrumb-item active">Blank Page</li>
+			</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">Blank Page <small>header small text goes here...</small></h1>
+			<!-- end page-header -->
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<h4 class="panel-title">Panel Title here</h4>
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+					</div>
+				</div>
+				<div class="panel-body">
+					<form method="POST" th:object="${grupo}" th:action="@{/gerencia/grupo/salvar}">
+						<gurugo:message/>
+          				<input type="hidden" th:field="*{id}">
+          				<div class="row">
+          					<div class="col-md-12">
+          						<div class="form-group">
+                    				<label for="nomeGrupo">Nome</label>
+                         			<input type="text" id="nomeGrupo" name="nomeGrupo" gurugo:classforerror="nomeGrupo" class="form-control" th:field="*{nomeGrupo}">
+                    			</div>
+          					</div>
+          				</div>
+          				<div class="row">
+          					<div class="col-md-12">
+         						<label for="nome">Permissões</label>
+         					</div>
+         					<div class="form-group">
+		         				<div class="row m-l-3">
+		         					<th:block th:each="item : ${permissoes}">
+		         						<div class="col-md-2">
+			                     			<label class="checkbox checkbox-inline">
+			                     				<input type="checkbox" th:value="${item.id}" th:field="*{permissoes}">
+			                     				<span th:text="${item.nomePermissao}"></span>
+			                     			</label>
+		          						</div>
+		         					</th:block>
+		         				</div>
+          					</div>
+          				</div>
+          			<div class="card-footer text-right">
+                		<button type="submit" class="btn btn-fill btn-info">Gravar</button>
+          			</div>
+             	</form>
+			</div>
+		</div>
+			<!-- end panel -->
+	</div>
+</section>
+<section layout:fragment="javascript-extra">
+	
+
+
+</section>
+
+</html>

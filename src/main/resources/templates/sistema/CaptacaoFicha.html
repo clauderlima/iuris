@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout-padrao">
+
+<section layout:fragment="conteudo">
+	<div class="content">
+    	<div class="container-fluid">
+        	<div class="row">
+            	<div class="col-md-12 ml-auto mr-auto">
+                	<div class="nav-container">
+                    	<ul class="nav nav-icons justify-content-center" role="tablist">
+                        	<li class="nav-item" aria-expanded="false">
+	                            <a class="nav-link active" id="description-tab" href="#cadastro" role="tab" data-toggle="tab" aria-expanded="true">
+	                                <i class="nc-icon nc-single-02"></i>
+	                                <br> Dados 
+	                            </a>
+	                        </li>
+	                        
+	                        <li class="nav-item">
+	                            <a class="nav-link" id="legal-info-tab" href="#objeto" role="tab" data-toggle="tab" aria-expanded="false">
+	                                <i class="nc-icon nc-tag-content"></i>
+	                                <br> Histórico
+	                            </a>
+	                        </li>
+	                        
+	                    </ul>
+                	</div>
+	                <div class="tab-content">
+	                    <div class="tab-pane fade active show" id="cadastro" aria-labelledby="info-tab" aria-expanded="false">
+	                        <div class="card">
+	                            <div class="card-header">
+	                                <div class="row">
+	                                	<div class="col-md-10">
+	                            			<h4 class="card-title">Dados da Pessoa</h4>
+	                            		</div>
+	                            		<div class="col-md-2 text-center">
+	                            			<a th:href="@{/captacao/{id}(id=${captacao.id})}" class="btn btn-fill btn-warning">Editar</a>
+	                            		</div>
+	                                </div>
+	                            </div>
+	                            <div class="card-body">
+	                            	<div class="row">
+	                            		<div class="col-md-10">
+	                            			<div class="titulo">Informações Pessoais</div>
+	                            		</div>
+	                            		<div class="col-md-2 text-center">
+	                            		</div>
+	                            	</div>
+	                            	<hr class="risco">
+	                            	<div class="row">
+	                            		<div class="col-md-6">
+	                            			<div class="label">Nome:</div>
+	                            			<span th:text="${captacao.nome}"></span>
+	                            		</div>
+	                            		<div class="col-md-3">
+	                            			<div class="label">E-mail:</div>
+	                            			<span th:text="${captacao.email}"></span>
+	                            		</div>
+	                            		<div class="col-md-3">
+	                            			<div class="label">Telefone:</div>
+	                            			<span th:text="${captacao.telefone}"></span>
+	                            		</div>
+	                            	</div>
+	                            	
+	                            	<br>
+	                            	<div class="row">
+	                            		<div class="col-md-6">
+	                            			<div class="titulo">Dados da Dívida</div>
+	                            		</div>
+	                            		<div class="col-md-6">
+	                            		</div>
+	                            	</div>
+	                            	<hr class="risco">
+	                            	<div class="row">
+                            			<div class="col-md-2">
+	                            			<div class="label">Valor Financiado:</div>
+	                            			<span th:text="${#numbers.formatCurrency(captacao.valorFinanciado)}"></span>
+	                            		</div>
+                            			<div class="col-md-2">
+	                            			<div class="label">QTD Parcelas:</div>
+	                            			<span th:text="${captacao.qtdTotalParcelas}"></span>
+	                            		</div>
+                            			<div class="col-md-2">
+	                            			<div class="label">Parcelas Pagas:</div>
+	                            			<span th:text="${captacao.qtdParcelasPagas}"></span>
+	                            		</div>
+	                            		<div class="col-md-2">
+	                            			<div class="label">Parcelas Atrasadas:</div>
+	                            			<span th:text="${captacao.qtdParcelasEmAtraso}"></span>
+	                            		</div>
+	                            		<div class="col-md-2">
+	                            			<div class="label">Parcelas Restante:</div>
+	                            			<span th:text="${captacao.qtdParcelasRestante}"></span>
+	                            		</div>
+	                            		<div class="col-md-2">
+	                            			<div class="label">Valor da Parcela:</div>
+	                            			<span th:text="${#numbers.formatCurrency(captacao.valorAtualParcela)}"></span>
+	                            		</div>
+	                            	</div>
+	                            	<hr class="risco">
+	                            	<div class="row">
+                            			<div class="col-md-3">
+	                            			<div class="label">Dívida Atual:</div>
+	                            			<span th:text="${#numbers.formatCurrency(captacao.divida)}"></span>
+	                            		</div>
+                            			<div class="col-md-3">
+	                            			<div class="label">Meta de Quitação</div>
+	                            			<span th:text="${#numbers.formatCurrency(captacao.metaQuitacao)}"></span>
+	                            		</div>
+
+	                            	</div>
+	                        	</div>
+	                        </div>
+	                    </div>
+	                    
+	                    
+	                    
+	                    <div class="tab-pane fade" id="objeto" aria-labelledby="info-tab" aria-expanded="false">
+	                        <div class="card">
+	                            <div class="card-header">
+	                                <div class="row">
+	                                	<div class="col-md-10">
+	                            			<h4 class="card-title">Histórico</h4>
+	                            		</div>
+	                            		<div class="col-md-2 text-center" >
+		                            		<a th:href="@{/historico/captacao/novo/{id}(id=${captacao.id})}" class="btn btn-fill btn-warning">Nova Informação</a>
+	                            		</div>
+	                                </div>
+	                                <i><p class="category"><strong>Cliente: </strong><span th:text="${captacao.nome}"></span></p></i>
+	                            </div>
+	                            <div class="card-body">
+                        			<div id="vertical-timeline" class="vertical-container dark-timeline center-orientation" >
+                            			<div class="vertical-timeline-block" th:each="historico : ${historicos}">
+                                			<div class="vertical-timeline-icon navy-bg">
+			                                    <i class="far fa-2x" th:classappend="${historico.titulo.icone}"></i>
+			                                </div>
+                                			<div class="vertical-timeline-content">
+                                    			<h2 th:text="${historico.titulo.nomeTitulo}">Meeting</h2>
+                                    			<div class="row">
+                                    				<div class="col-md-12">
+		                                    			<p th:text="${historico.mensagemEvento}"></p>
+                                    				</div>
+                                    			</div>
+                                    			<div class="card">
+                                    				<th:block class="row" th:if="${historico.dataHoraContato}">
+	                                    				<div class="col-md-12">
+	                                    					<p class="category"> 
+	                                    						<span th:text="${historico.mensagemContato}">Monicaducts. Below please find the current status of the sale.</span>
+	                                    					</p>
+	                                    				</div>
+	                                    				<div class="col-md-12">
+	                                    					<p class="text-right">
+	                                    						<span th:text="${historico.responsavelContato} ? ${historico.responsavelContato.nome} : ''"></span> <br>
+				                                        		<small style="color: #1ab394" th:text="${#temporals.day(historico.dataHoraContato)} + ' de ' + ${#temporals.monthName(historico.dataHoraContato)}
+				                                        			+ ' de ' + ${#temporals.year(historico.dataHoraContato)} + ' &agrave;s ' + ${#temporals.hour(historico.dataHoraContato)}
+				                                        			+ ':' + ${#temporals.minute(historico.dataHoraContato)}+ 'h'">Dec 24
+				                                        		</small>
+				                                        	</p>
+	                                    				</div>
+	                  
+                                    				</th:block>
+                                    			</div>
+                                    			
+                                    			<div class="row" th:unless="${historico.dataHoraContato}">
+                                    				<div class="col-md-8">
+                                    				</div>
+                                    				<div class="col-md-2">
+                                    					<br>
+                                    					<a href="#" th:xx="${historico.id}" class="btn informacao btn-sm btn-primary" data-toggle="modal" data-target="#modalLancarInformacao"> Lançar Informação</a>
+                                    				</div>
+                                    			</div>
+                                    			
+			                                    <span class="vertical-date">
+			                                        <span th:text="${historico.responsavelEvento.nome}"></span> <br>
+			                                        <small th:text="${#temporals.day(historico.dataHoraEvento)} + ' de ' + ${#temporals.monthName(historico.dataHoraEvento)}
+			                                        + ' de ' + ${#temporals.year(historico.dataHoraEvento)} + ' &agrave;s ' + ${#temporals.hour(historico.dataHoraEvento)}
+			                                        + ':' + ${#temporals.minute(historico.dataHoraEvento)}+ 'h'">Dec 24</small>
+			                                    </span>
+                                			</div>
+                            			</div>
+                        			</div>
+                    			</div>
+	                        </div>
+	                    </div>
+	                    
+	                </div>
+                	<!-- end tab card-body -->
+            	</div>
+            	<!-- end col-md-8 -->
+        	</div>
+        	<!-- end row -->
+    	</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalLancarInformacao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLongTitle">Lançamento de informação ao cliente</h5>
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          				<span aria-hidden="true">&times;</span>
+        			</button>
+      			</div>
+	       		<form class="form-horizontal" method="POST" th:action="@{/historico/contato}">
+	       			<input type="hidden" name="responsavelContato" id="responsavelContato" th:value="${#authentication.principal.usuario.pessoa.id}">
+      				<div class="modal-body">
+      					<div class="alert alert-danger d-none js-mensagem-cadastro-rapido-titulo" role="alert"></div>
+		       			<div class="row">
+		       				<div class="col-md-6">
+		       					<div class="form-group">
+		                      		<label for="tipoContato">Tipo de contato</label>
+		                      		<select id="tipoContato" name="tipoContato" class="form-control">
+		                      			<option value="">Selecione..</option>
+		                      			<option value="telefone">Telefone</option>
+		                      			<option value="WhatsApp">WhatsApp</option>
+		                      			<option value="e-mail">E-mail</option>
+		                      			<option value="sistema">Sistema</option>
+		                      			<option value="pessoal">Pessoal</option>
+		                      		</select>
+		                      	</div>
+		       				</div>
+		       				<div class="col-md-6">
+		       					<div class="form-group">
+		                      		<label for="status">Prioridade</label>
+		                      		<select id="status" name="status" class="form-control">
+		                      			<option value="">Selecione..</option>
+		                      			<option value="baixa">Baixa</option>
+		                      			<option value="normal">Normal</option>
+		                      			<option value="alta">Alta</option>
+		                      		</select>
+                      			</div>
+		       				</div>
+		       			</div>
+		       			<div class="row">
+		       				<div class="col-md-12">
+		       					<div class="form-group">
+		                      		<label for="mensagemContato">Informação</label>
+		                      		<input type="text" name="mensagemContato" id="mensagemContato" class="form-control">
+		                      	</div>
+		       				</div>
+		       				
+		       			</div>
+		      		</div>
+	      			<div class="modal-footer">
+	        			<button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+	        			<button id="btn-salvar" type="button" class="btn btn-success js-modal-cadastro-titulo-salvar-btn">Gravar</button>
+	      			</div>
+		       	</form>
+    		</div>
+  		</div>
+	</div>
+</section>
+<section layout:fragment="javascript-extra">
+	<script th:src="@{/js/lancar-informacao-historico.js}"></script>
+	
+	<script>
+/* 	 	$('.informacao').click(function () {
+	 	    console.log($(this).val("xx"));
+	 	}); */
+	</script>
+</section>
+
+</html>
